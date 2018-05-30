@@ -15,6 +15,14 @@
     "lib": [
       "es2017",
       "dom"
-    ]
+    ],
+    "paths": {
+      "natrium-lib": [
+        "dist/natrium-lib"
+      ],
+      "natrium-lib/*": [
+        "dist/natrium-lib/*"
+      ]
+    }
   }
 }
