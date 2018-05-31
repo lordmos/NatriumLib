@@ -1,5 +1,6 @@
 .ng-pagination-container {
     text-align: center;
+    user-select: none;
 }
 
 .ng-pagination-container ul {
@@ -26,7 +27,6 @@
     display: inline-block;
     font-size: 1rem;
     padding: 0 0.75rem;
-    font-size: 0.875rem;
     line-height: 1.5rem;
 }
 
@@ -35,23 +35,20 @@
 }
 
 .ng-pagination-container ul li.active span {
-    color: #d5212b;
+    color: #3273DF;
 }
 
-.ng-pagination-container ul li.round {
+.ng-pagination-container ul li span.round {
     box-sizing: border-box;
     border: 1px solid #aaaaaa;
     background: white;
     border-radius: 50%;
     width: 1.5rem;
     height: 1.5rem;
-}
-
-.ng-pagination-container ul li.round span {
     padding: 0;
-    margin: auto;
 }
 
-.ng-pagination-container ul li.round.disabled {
+.ng-pagination-container ul li span.round.disabled {
     background: #F6F6F6;
+    color: #d2d2d2;
 }
