@@ -14,6 +14,22 @@
 
 卸载时请手动清除`CSS`引用，以免`Angular`项目无法正常编译。
 
+npm安装完成后需要在`app.module.ts`中引入`NatriumLibModule`:
+
+> app.module.ts
+
+    ...
+    import { NatriumLibModule } from 'natrium-lib';
+
+    @NgModule({
+        ...
+        imports: [
+            ...
+            NatriumLibModule
+        ]
+        ...
+    })
+
 ## Natrium基础组件集
 
 `Natrium Lib`使用[Bulma](https://bulma.io/)作为基本组件的样式集。
@@ -30,22 +46,22 @@
 
 图标的使用方法请参照`Bulma`官方文档和相应的图标集使用文档。
 
-## Natrium复合组件集
+## Natrium复合型组件集
 
-复合组件是对`Bulma`的基本组件的`Angular`组合封装。`Natrium Lib`的组件设计哲学就是**“Data always first”**，我们希望用户只关心数据本身，而不需要在`HTML`模版上进行修改。
+复合型组件是对`Bulma`的基本组件的`Angular`组合封装。`Natrium Lib`的组件设计哲学就是**“Data always first”**，我们希望用户只关心数据本身，而不需要在`HTML`模版上进行修改。
 
 包含以下组件，其中包括：
 
 - `NaTable` : 通过加载配置项数据和列表数据，可以对表格数据进行展示和操作。
 - `NaForm` : 通过加载配置项数据和表单数据，可以对表单数据进行展示和操作，而且还能轻松获得表单验证的支持。
 
-## Natrium封装组件集
+## Natrium封装型组件集
 
-封装组件是对常用组件的一层封装，让大家可以直接使用组件而避免非数据驱动或者无法直接使用的副作用。
+封装型组件是对常用组件的一层封装，让大家可以直接使用组件而避免非数据驱动或者无法直接使用的副作用。
 
-- `NaPagination` : 分页导航器。初始化时设置当前页、总页数和页面导航器所要展示的页面数量，就可以轻松获取和操作页面导航数据。由于`Bulma`的`Pagination`并不基于数据驱动`AJAX`请求而是页面跳转——当然也可以通过`Angular`点击事件驱动，但是用户需要在`HTML`上进行处理，为了减少用户的代码量——因此我不推荐直接使用`Bulma`的`Pagination`组件而是选择重新封装。
-- `NaComponentHost` : 在`Angular`中加载动态组件时候需要一个`Host`。直接使用`NaComponentHost`吧。
-- `NaOutlet` : 在`route module`中经常需要使用`router-outlet`。直接使用`NaOutlet`吧。
+- [NaPagination](./docs/na-pagination.md) : 分页导航器。初始化时设置当前页、总页数和页面导航器所要展示的页面数量，就可以轻松获取和操作页面导航数据。由于`Bulma`的`Pagination`并不基于数据驱动`AJAX`请求而是页面跳转——当然也可以通过`Angular`点击事件驱动，但是用户需要在`HTML`上进行处理，为了减少用户的代码量——因此我不推荐直接使用`Bulma`的`Pagination`组件而是选择重新封装。
+- [NaComponentHost](./docs/na-component-host.md) : 在`Angular`中加载动态组件时候需要一个`Host`。直接使用`NaComponentHost`吧。
+- [NaOutlet](./docs/na-outlet.md) : 在`routing-module`中经常需要在HTML中嵌套`router-outlet`。直接使用`NaOutlet`吧。
 
 ## Natrium组件风格化
 
