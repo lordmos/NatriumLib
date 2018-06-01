@@ -25,6 +25,7 @@
                         "styles": [
                             "node_modules/ionicons/dist/css/ionicons.min.css",
                             "node_modules/bulma/css/bulma.min.css",
+                            "node_modules/bulma-extensions/dist/bulma-extensions.min.css",
                             "src/styles.css"
                         ],
                         "scripts": []

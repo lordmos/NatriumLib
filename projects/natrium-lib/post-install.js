@@ -12,8 +12,10 @@ function changeAngularJsonConfig() {
             const config = JSON.parse(file.toString());
             for (let key in config.projects) {
                 if (config.projects[key].root === "") {
-                    config.projects[key].architect.build.options.styles.unshift("node_modules/ionicons/dist/css/ionicons.min.css")
-                    config.projects[key].architect.build.options.styles.unshift("node_modules/bulma/css/bulma.min.css")
+                    config.projects[key].architect.build.options.styles.unshift("node_modules/ionicons/dist/css/ionicons.min.css");
+                    config.projects[key].architect.build.options.styles.unshift("node_modules/bulma/css/bulma.min.css");
+                    config.projects[key].architect.build.options.styles.unshift("node_modules/bulma-extensions/dist/bulma-extensions.min.css");
+                    break;
                 }
             }
             fs.writeFileSync(angularJsonPath, JSON.stringify(config, undefined, 2));

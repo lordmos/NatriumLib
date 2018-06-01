@@ -37,6 +37,7 @@ function changePackageJsonConfig() {
             };
             config["dependencies"]["ionicons"] = "^4.1.2";
             config["dependencies"]["bulma"] = "^0.7.1";
+            config["dependencies"]["bulma-extensions"] = "^1.0.32";
             fs.writeFileSync(distPackageJsonPath, JSON.stringify(config, undefined, 2));
             console.log("Natrium Lib configuration is completed .");
         }

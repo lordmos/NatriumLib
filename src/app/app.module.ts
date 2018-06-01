@@ -2,7 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { NatriumLibModule } from 'dist/natrium-lib';
+import { NatriumLibModule } from 'projects/natrium-lib/src/public_api';
+
 
 @NgModule({
   declarations: [
