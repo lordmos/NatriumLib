@@ -28,7 +28,12 @@
                             "node_modules/bulma-extensions/dist/bulma-extensions.min.css",
                             "src/styles.css"
                         ],
-                        "scripts": []
+                        "scripts": [
+                            "node_modules/bulma-extensions/bulma-accordion/dist/bulma-accordion.min.js",
+                            "node_modules/bulma-extensions/bulma-calendar/dist/bulma-calendar.min.js",
+                            "node_modules/bulma-extensions/bulma-carousel/dist/bulma-carousel.min.js",
+                            "node_modules/bulma-extensions/bulma-tagsinput/dist/bulma-tagsinput.min.js"
+                        ]
                     },
                     "configurations": {
                         "production": {

@@ -30,35 +30,34 @@
 
 `npm uninstall --save natrium-lib`
 
-处于考量，你可能会依然需要在项目中使用`Bulma`、`Bulma-extensions`和`Ionicons`，因此在卸载时请**按需**手动清除`angular.json`文件中的`CSS`引用，以免`Angular`项目无法正常编译。
+出于考量，你可能会依然需要在项目中使用`Bulma`、`Bulma-extensions`和`Ionicons`，因此在卸载时请**按需**手动清除`angular.json`文件中的`CSS`引用，以免`Angular`项目无法正常编译。以下是`CSS`引用：
 
-以下是肯定存在的`CSS`引用：
+> angular.json
+    ...
+    "styles": [
+        ...
+        "node_modules/ionicons/dist/css/ionicons.min.css",
+        "node_modules/bulma/css/bulma.min.css",
+        "node_modules/bulma-extensions/dist/bulma-extensions.min.css"
+        ...
+    ],
+    ...
 
-    "node_modules/ionicons/dist/css/ionicons.min.css",
-    "node_modules/bulma/css/bulma.min.css",
-    "node_modules/bulma-extensions/dist/bulma-extensions.min.css"
 
-以下是可能存在的`CSS`引用：
+另外，由于在`Natrium Lib`中部分`Bulma-extensions`组件需要`JavaScript`依赖，因此请在卸载`Natrium Lib`时也请**按需**删除手动清除`angular.json`文件中的`JavaScript`引用，以免`Angular`项目无法正常编译。以下是`JavaScript`引用：
 
-    "node_modules/bulma-extensions/bulma-accordion/dist/bulma-accordion.min.css",
-    "node_modules/bulma-extensions/bulma-badge/dist/bulma-badge.min.css",
-    "node_modules/bulma-extensions/bulma-calendar/dist/bulma-calendar.min.css",
-    "node_modules/bulma-extensions/bulma-carousel/dist/bulma-carousel.min.css",
-    "node_modules/bulma-extensions/bulma-checkradio/dist/bulma-checkradio.min.css",
-    "node_modules/bulma-extensions/bulma-divider/dist/bulma-divider.min.css",
-    "node_modules/bulma-extensions/bulma-iconpicker/dist/bulma-iconpicker.min.css",
-    "node_modules/bulma-extensions/bulma-pageloader/dist/bulma-pageloader.min.css",
-    "node_modules/bulma-extensions/bulma-pricingtable/dist/bulma-pricingtable.min.css",
-    "node_modules/bulma-extensions/bulma-quickview/dist/bulma-quickview.min.css",
-    "node_modules/bulma-extensions/bulma-ribbon/dist/bulma-ribbon.min.css",
-    "node_modules/bulma-extensions/bulma-slider/dist/bulma-slider.min.css",
-    "node_modules/bulma-extensions/bulma-steps/dist/bulma-steps.min.css",
-    "node_modules/bulma-extensions/bulma-switch/dist/bulma-switch.min.css",
-    "node_modules/bulma-extensions/bulma-tagsinput/dist/bulma-tagsinput.min.css",
-    "node_modules/bulma-extensions/bulma-timeline/dist/bulma-timeline.min.css",
-    "node_modules/bulma-extensions/bulma-tooltip/dist/bulma-tooltip.min.css"
+> angular.json
+    ...
+    "scripts": [
+        ...
+        "node_modules/bulma-extensions/bulma-accordion/dist/bulma-accordion.min.js",
+        "node_modules/bulma-extensions/bulma-calendar/dist/bulma-calendar.min.js",
+        "node_modules/bulma-extensions/bulma-carousel/dist/bulma-carousel.min.js",
+        "node_modules/bulma-extensions/bulma-tagsinput/dist/bulma-tagsinput.min.js"
+        ...
+    ],
+    ...
 
-另外，由于在`NaForm`中需要使用到时间获取的相关功能，因此`Natrium Lib`默认会在安装时在`index.html`中添加来自`Bulma-extensions`的组件`[Calendar](https://wikiki.github.io/components/calendar/)`，请在卸载`Natrium Lib`时也请**按需**删除引入代码：`<script src="/node_modules/bulma-extensions/bulma-calendar/dist/bulma-calendar.min.js"></script>`。
 
 ## Natrium基础组件集
 
@@ -68,18 +67,12 @@
 
 - [Page-loader](https://wikiki.github.io/elements/pageloader/)，来自`Bulma-extensions`：它的引用方式很简单，只需要一行HTML代码`<div class="pageloader"><span class="title">Pageloader</span></div>`，默认的状态是收起状态，需要通过在`Page-loader`的样式中使用`is-active`激活它，如`<div class="pageloader is-active"><span class="title">Pageloader</span></div>`。在Angular中，你可以通过ngClass的方式来激活它。
 
-另外`Bulma-extensions`提供了一部分需要`JavaScript`支持的复合组件，如果需要，请**按需**在项目的index.html中自行添加引入的组件`JavaScript`代码。
+另外`Bulma-extensions`提供了一部分需要`JavaScript`支持的复合组件，也在安装时自动将`JavaScript`引入到了`angular.json`文件中。自动引入的组件有：
 
-以下是你可能会用到的组件：
-
-- [Accordion](https://wikiki.github.io/components/accordion/)，引入代码：`<script type="text/javascript" src="/node_modules/bulma-extensions/bulma-accordion/dist/bulma-accordion.min.js"></script>`
-- [Calendar](https://wikiki.github.io/components/calendar/)，引入代码：`<script src="/node_modules/bulma-extensions/bulma-calendar/dist/bulma-calendar.min.js"></script>`
-- [Carousel](https://wikiki.github.io/components/carousel/)，引入代码：`<script type="text/javascript" src="/node_modules/bulma-extensions/bulma-carousel/dist/bulma-carousel.min.js"></script>`
-- [TagsInput](https://wikiki.github.io/form/tagsinput/)，引入代码：`<script type="text/javascript" src="/node_modules/bulma-extensions/bulma-tagsinput/dist/bulma-tagsinput.min.js"></script>`
-
-以下是不推荐使用的组件：
-
-- [IconPicker](<script type="text/javascript" src="/node_modules/bulma-extensions/bulma-iconpicker/dist/bulma-iconpicker.min.js"></script>)，来自`Bulma-extensions`，引入代码：`<script type="text/javascript" src="/node_modules/bulma-extensions/bulma-iconpicker/dist/bulma-iconpicker.min.js"></script>`
+- [Accordion](https://wikiki.github.io/components/accordion/)
+- [Calendar](https://wikiki.github.io/components/calendar/)
+- [Carousel](https://wikiki.github.io/components/carousel/)
+- [TagsInput](https://wikiki.github.io/form/tagsinput/)
 
 组件具体的使用方式与样式请参照`Bulma`和`Bulma-extensions`的官方文档。
 
@@ -92,6 +85,7 @@
     <span class="icon has-text-info">
         <i class="ion-ios-albums"></i>
     </span>
+
 
 图标的使用方法请参照`Bulma`[官方文档-图标部分](https://bulma.io/documentation/elements/icon/)和相应的图标集使用文档。
 

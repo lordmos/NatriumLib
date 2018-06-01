@@ -10,6 +10,11 @@ export class NaFormComponent implements OnInit {
 	constructor() { }
 
 	ngOnInit() {
+		window["bulmaCalendar"].attach('[type="date"]', {
+			overlay: false,
+			dateFormat: 'yyyy-mm-dd',
+			lang: 'zh-cn'
+		});
 	}
 
 }
