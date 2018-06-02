@@ -1,6 +1,5 @@
 import { ValidatorFn } from "@angular/forms";
 import { ComponentDecorator, ComponentRef, ComponentFactory } from "@angular/core";
-import { equal } from "assert";
 
 export class NaFormConfig {
 
@@ -8,11 +7,35 @@ export class NaFormConfig {
 
     private _title: string;
 
+    private _titleStyle: string;
+
+    private _confirmBtnText: string;
+
+    private _confirmBtnIcon: string;
+
+    private _confirmBtnStyle: string;
+
+    private _cancelBtnText: string;
+
+    private _cancelBtnIcon: string;
+
+    private _cancelBtnStyle: string;
+
+    private _showCancelBtn: boolean;
+
     private _config: Array<NaFormConfigItem>;
 
     constructor(context: any) {
         this._context = context;
         this._title = "";
+        this._titleStyle = "";
+        this._confirmBtnText = "submit";
+        this._confirmBtnIcon = "";
+        this._confirmBtnStyle = "";
+        this._cancelBtnText = "cancel";
+        this._cancelBtnIcon = "";
+        this._cancelBtnStyle = "";
+        this._showCancelBtn = false;
         this._config = [];
     }
 
@@ -29,6 +52,15 @@ export class NaFormConfig {
         return this._title;
     }
 
+    setTitleStyle(style: string): NaFormConfig {
+        this._titleStyle = style;
+        return this;
+    }
+
+    getTitleStyle(): string {
+        return this._titleStyle;
+    }
+
     setConfig(config: Array<NaFormConfigItem>): NaFormConfig {
         this._config = config;
         return this;
@@ -38,34 +70,86 @@ export class NaFormConfig {
         return this._config;
     }
 
+    setConfirmBtnConfig(btnText: string, btnIcon?: string, btnStyleCss?: string) {
+        this._confirmBtnText = btnText;
+        if (btnIcon) this._confirmBtnIcon = btnIcon;
+        if (btnStyleCss) this._confirmBtnStyle = btnStyleCss;
+        return this;
+    }
+
+    getConfirmBtnConfig() {
+        return {
+            btnText: this._confirmBtnText,
+            btnIcon: this._confirmBtnIcon,
+            btnStyleCss: this._confirmBtnStyle
+        }
+    }
+
+    setCancelBtnConfig(showCancelBtn: boolean, btnText?: string, btnIcon?: string, btnStyleCss?: string) {
+        this._showCancelBtn = showCancelBtn;
+        if (btnText) this._cancelBtnText = btnText;
+        if (btnIcon) this._cancelBtnIcon = btnIcon;
+        if (btnStyleCss) this._cancelBtnStyle = btnStyleCss;
+        return this;
+    }
+
+    getCancelBtnConfig() {
+        return {
+            showCancelBtn: this._showCancelBtn,
+            btnText: this._cancelBtnText,
+            btnIcon: this._cancelBtnIcon,
+            btnStyleCss: this._cancelBtnStyle
+        }
+    }
+
 }
 
-export interface NaFormConfigItem {
+export type NaFormConfigItem = {
     label: string,
     name: string,
-    type: "text" | "tel" | "password" | "email" | "textarea"
+    type: "text" | "number" | "tel" | "password" | "email" | "textarea"
     | "select" | "radio" | "checkbox" | "date"
     | "file" | "img" | "search",
     /**
-     * @param placeholder 仅在type为text\tel\password\email\textarea时生效
+     * @param placeholder 仅在type为text\number\tel\password\email\textarea时生效
      * */
     placeholder?: string,
     /**
-     * @param equalTo 仅在type为text\tel\password\email\textarea时生效，用于判断是否与某个字段的值相等
+     * @param equalTo 仅在type为text\number\tel\password\email\textarea时生效，用于判断是否与某个字段的值相等
      * */
     equalTo?: string,
-    validators?: Array<ValidatorFn>,
-    invalidErrorText?: Array<{
-        type: "required" | "minLength" | "maxlength" | "email" | string,
-        invalidText: string,
-        invalidIcon?: string,
-        /**
-         * @param invalidInputIcon 仅在type为text\tel\password\email时生效
-         * */
-        invalidInputIcon?: string
-    }>,
     /**
-     * @param inputIcon 仅在type为text\tel\password\email时生效
+     * @param equalErrorText 字段不相等时的错误文案
+     * */
+    equalErrorText?: string,
+    /**
+     * @param notEqualTo 仅在type为text\number\tel\password\email\textarea时生效，用于判断是否与某个字段的值不相等
+     * */
+    notEqualTo?: string,
+    /**
+     * @param notEqualErrorText 字段相等时的错误文案
+     * */
+    notEqualErrorText?: string,
+    /**
+     * @param largeThan 仅在type为number\date时生效，用于判断此字段的值是否与大于某个字段的值
+     * */
+    largeThan?: string,
+    /**
+     * @param largeErrorText 仅在type为number\date时生效，用于此字段的值不大于某个字段的值时的错误提示
+     * */
+    largeErrorText?: string,
+    /**
+     * @param lessThan 仅在type为number\date时生效，用于判断此字段的值是否与小于某个字段的值
+     * */
+    lessThan?: string,
+    /**
+     * @param lessErrorText 仅在type为number\date时生效，用于此字段的值不小于某个字段的值时的错误提示
+     * */
+    lessErrorText?: string,
+    validators?: Array<ValidatorFn>,
+    invalidErrorText?: any,
+    /**
+     * @param inputIcon 仅在type为text\number\tel\password\email时生效
      * */
     inputIcon?: string,
     /**
@@ -115,7 +199,7 @@ export interface NaFormConfigItem {
             btnIcon: string,
             btnStyleCss: string
         },
-        setFileList?: (files: Array<URL>) => void
+        setFileList?: (files: Array<string>) => void
     ) => void
 }
 

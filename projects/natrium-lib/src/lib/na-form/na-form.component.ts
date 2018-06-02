@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NaFormConfig } from './na-form.config';
+import { NaFormConfig, NaFormConfigItem } from './na-form.config';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -11,11 +11,13 @@ export class NaFormComponent implements OnInit {
 
 	private _config: NaFormConfig;
 
+	public configSelfValidatorError: any;
+
 	@Input() set config(config: NaFormConfig) {
 		this._config = config;
 		this.form = new FormGroup(this.getFormControlGroups());
 		this.form.valueChanges.subscribe(value => this.onFormValueChange(value));
-		for (let ctrl in this.form.controls) {
+		for (const ctrl in this.form.controls) {
 			this[ctrl] = this.form.controls[ctrl];
 		}
 	}
@@ -29,7 +31,7 @@ export class NaFormComponent implements OnInit {
 	@Input() set data(data: any) {
 		this._data = data;
 		if (this.form) {
-			for (let key in data) {
+			for (const key in data) {
 				this.form.controls[key].setValue(data[key]);
 			}
 		}
@@ -40,6 +42,7 @@ export class NaFormComponent implements OnInit {
 
 	constructor() {
 		this._data = {};
+		this.configSelfValidatorError = {};
 		this.form = undefined;
 	}
 
@@ -47,9 +50,10 @@ export class NaFormComponent implements OnInit {
 
 	getFormControlGroups() {
 		let groups = {};
-		for (let configItem of this.config.getConfig()) {
+		for (const configItem of this.config.getConfig()) {
 			switch (configItem.type) {
 				case "text":
+				case "number":
 				case "tel":
 				case "password":
 				case "email":
@@ -63,14 +67,15 @@ export class NaFormComponent implements OnInit {
 						this._data[configItem.name] ? this._data[configItem.name] : "",
 						configItem.validators
 					)
-
-					setTimeout(() => {
-						new window["bulmaCalendar"](document.querySelector('#' + configItem.name), {
-							overlay: false,
-							lang: "zh-cn",
-							onSelect: date => this.onDateSelect(configItem.name, new Date(date).getTime())
-						})
-					}, 50);
+					if (!/Android|iPhone/i.test(window.navigator.userAgent) && configItem.type === 'date') {
+						setTimeout(() => {
+							new window["bulmaCalendar"](document.querySelector('#' + configItem.name), {
+								overlay: true,
+								lang: configItem.dateLang ? configItem.dateLang : "zh-cn",
+								onSelect: date => this.onDateSelect(configItem.name, new Date(date).getTime())
+							})
+						}, 50);
+					}
 					break;
 				case "file":
 					break;
@@ -82,19 +87,66 @@ export class NaFormComponent implements OnInit {
 	}
 
 	onFormValueChange(value: any) {
-		console.log(value);
+		this.configSelfValidatorError = {
+			valid: true
+		};
+		for (const configItem of this._config.getConfig()) {
+			this.configSelfValidatorError[configItem.name] = {};
+			if (configItem.equalTo && value[configItem.name] !== value[configItem.equalTo]) {
+				this.configSelfValidatorError[configItem.name].equalTo = {
+					error: true,
+					errorText: configItem.equalErrorText
+				}
+				this.configSelfValidatorError.valid = false;
+			}
+			if (configItem.notEqualTo && value[configItem.name] === value[configItem.notEqualTo]) {
+				this.configSelfValidatorError[configItem.name].notEqualTo = {
+					error: true,
+					errorText: configItem.notEqualErrorText
+				};
+				this.configSelfValidatorError.valid = false;
+			}
+			if ((configItem.type === "date" || configItem.type === "number") && configItem.largeThan && value[configItem.name] <= value[configItem.largeThan]) {
+				this.configSelfValidatorError[configItem.name].largeThan = {
+					error: true,
+					errorText: configItem.largeErrorText
+				};
+				this.configSelfValidatorError.valid = false;
+			}
+			if ((configItem.type === "date" || configItem.type === "number") && configItem.lessThan && value[configItem.name] >= value[configItem.lessThan]) {
+				this.configSelfValidatorError[configItem.name].lessThan = {
+					error: true,
+					errorText: configItem.lessErrorText
+				};
+				this.configSelfValidatorError.valid = false;
+			}
+		}
 	}
 
 	onDateSelect(name: string, date: number) {
 		this.form.controls[name].setValue(date);
 	}
 
-	call(action: Function, ...args: Array<any>) {
-		action.call(this.config.getContext(), args);
+	call(configItem: NaFormConfigItem) {
+		if (!configItem.action) return;
+
+		configItem.action.call(
+			this.config.getContext(),
+			configItem.searchFrom ? this.form.controls[configItem.searchFrom].value : this.form.controls[configItem.name].value,
+			configItem,
+			configItem.type === "search" ? null : (files: Array<string>) => {
+				console.log(files);
+			}
+		);
 	}
 
 	submit(data: any) {
 		this.onSubmit.emit(data);
+	}
+
+	getKeys(obj: any): Array<string> {
+		if(!obj) return [];
+		return Object.keys(obj);
 	}
 
 }

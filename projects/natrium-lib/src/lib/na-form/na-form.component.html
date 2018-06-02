@@ -1,17 +1,79 @@
 <form [formGroup]="form" (ngSubmit)="submit(form.value)" novalidate>
-    <div class="field" *ngFor="let item of config.getConfig();let index = index">
-        <label class="label">{{item.label}}</label>
-        <div [ngSwitch]="item.type">
-            <div class="control" *ngSwitchCase="'textarea'">
-                <textarea class="textarea is-primary" type="text" formControlName="{{item.name}}" [placeholder]="item.placeholder ? item.placeholder : ''"></textarea>
-            </div>
-            <div class="control" *ngSwitchCase="'date'">
-                <input id="{{item.name}}" class="input is-primary" [type]="item.type" formControlName="{{item.name}}" [placeholder]="item.placeholder ? item.placeholder : ''">
-            </div>
-            <div class="control" *ngSwitchDefault>
-                <input class="input is-primary" [type]="item.type" formControlName="{{item.name}}" [placeholder]="item.placeholder ? item.placeholder : ''">
+    <h1 [class]="config.getTitleStyle() ? config.getTitleStyle() : 'subtitle is-4'">
+        {{config.getTitle()}}</h1>
+    <div class="columns is-multiline">
+        <div *ngFor="let item of config.getConfig();let index = index" class="column is-half-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd">
+            <label class="label">{{item.label}}</label>
+            <div [ngSwitch]="item.type">
+                <div *ngSwitchCase="'search'" class="search">
+                    <div class="control search-input" [class.has-icons-left]="item.inputIcon" [class.has-icons-right]="item.validators && item.validators.length> 0">
+                        <input class="input" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length> 0" type="text" formControlName="{{item.name}}" [placeholder]="item.placeholder ? item.placeholder : '' ">
+                        <span class="icon is-left" *ngIf="item.inputIcon">
+                        <i [class]="item.inputIcon"></i>
+                    </span>
+                        <span class="icon is-right has-text-danger" *ngIf="item.validators && item.validators.length > 0">
+                        <i [class.ion-ios-alert]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length > 0"></i>
+                    </span>
+                    </div>
+                    <div class="search-button">
+                        <a [class]="item.btnStyleCss ? 'button ' + item.btnStyleCss : 'button'" (click)="call(item)">
+                            <span class="icon" *ngIf="item.btnIcon">
+                            <i [class]="item.btnIcon"></i>
+                        </span> <span>{{item.btnText ? item.btnText : "search"}}</span>
+                        </a>
+                    </div>
+
+                </div>
+                <div *ngSwitchCase="'textarea'">
+                    <textarea class="textarea" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length > 0" type="text" formControlName="{{item.name}}"
+                        [placeholder]="item.placeholder ? item.placeholder : '' "></textarea>
+                </div>
+
+                <div *ngSwitchDefault class="control" [class.has-icons-left]="item.inputIcon" [class.has-icons-right]="item.validators && item.validators.length > 0">
+                    <input *ngIf="item.type === 'date'" id={{item.name}} class="input" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length > 0" [type]="item.type"
+                        formControlName="{{item.name}}" [placeholder]="item.placeholder ? item.placeholder : '' ">
+                    <input *ngIf="item.type !== 'date'" class="input" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length > 0" [type]="item.type" formControlName="{{item.name}}"
+                        [placeholder]="item.placeholder ? item.placeholder : '' ">
+                    <span class="icon is-left" *ngIf="item.inputIcon">
+                        <i [class]="item.inputIcon"></i>
+                    </span>
+                    <span class="icon is-right has-text-danger" *ngIf="item.validators && item.validators.length > 0">
+                        <i [class.ion-ios-alert]="(form.controls[item.name].dirty || form.controls[item.name].touched) && form.controls[item.name].invalid && getKeys(form.controls[item.name].errors).length > 0 || (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(configSelfValidatorError[item.name]).length > 0"></i>
+                    </span>
+                </div>
+
+                <div *ngIf="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) ">
+                    <div *ngFor="let type of getKeys(form.controls[item.name].errors) ">
+                        <p class="help is-danger ">
+                            {{item.invalidErrorText && item.invalidErrorText[type] ? item.invalidErrorText[type] : "Error: " + type}}
+                        </p>
+                    </div>
+                </div>
+
+                <div *ngIf="form.controls[item.name].dirty || form.controls[item.name].touched">
+                    <div *ngFor="let type of getKeys(configSelfValidatorError[item.name]) ">
+                        <p class="help is-danger">
+                            {{configSelfValidatorError[item.name][type].error && configSelfValidatorError[item.name][type].errorText ? configSelfValidatorError[item.name][type].errorText : "Error: " + type}}
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="column is-12">
+            <button class="button {{config.getConfirmBtnConfig().btnStyleCss ? config.getConfirmBtnConfig().btnStyleCss : 'is-primary'}} {{config.getCancelBtnConfig().showCancelBtn ? 'half left' : 'block'}}" [disabled]="!form.valid || !configSelfValidatorError.valid && form.valid"
+                type="submit">
+                <span class="icon" *ngIf="config.getConfirmBtnConfig().btnIcon">
+                    <i [class]="config.getConfirmBtnConfig().btnIcon"></i>
+                </span>
+                <span>{{config.getConfirmBtnConfig().btnText}}</span>
+            </button>
+
+            <a class="button half right {{config.getCancelBtnConfig().btnStyleCss ? config.getCancelBtnConfig().btnStyleCss : ''}}" *ngIf="config.getCancelBtnConfig().showCancelBtn">
+                <span class="icon" *ngIf="config.getCancelBtnConfig().btnIcon">
+                    <i [class]="config.getCancelBtnConfig().btnIcon"></i>
+                </span>
+                <span>{{config.getCancelBtnConfig().btnText}}</span>
+            </a>
+        </div>
     </div>
-    <button class="danger full large login" [disabled]="!form.valid" type="submit">提交</button>
 </form>

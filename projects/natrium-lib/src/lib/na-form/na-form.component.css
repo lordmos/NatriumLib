@@ -1,0 +1,46 @@
+form {
+    padding: 1rem;
+}
+
+.column {
+    padding-top: 0;
+}
+
+.search {
+    display: flex;
+}
+
+.search-input {
+    display: block;
+    flex-basis: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    margin-right: 1rem;
+}
+
+.search-button {
+    flex: none;
+}
+
+.block {}
+
+.half {}
+
+.half.left {
+    margin-right: 0.5rem;
+}
+
+.half.right {
+    margin-left: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+    .block {
+        display: block;
+        width: 100%;
+    }
+    .half {
+        display: inline-block;
+        width: calc(50% - 0.5rem);
+    }
+}

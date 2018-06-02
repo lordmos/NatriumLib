@@ -33,6 +33,8 @@
 出于考量，你可能会依然需要在项目中使用`Bulma`、`Bulma-extensions`和`Ionicons`，因此在卸载时请**按需**手动清除`angular.json`文件中的`CSS`引用，以免`Angular`项目无法正常编译。以下是`CSS`引用：
 
 > angular.json
+
+
     ...
     "styles": [
         ...
@@ -47,6 +49,8 @@
 另外，由于在`Natrium Lib`中部分`Bulma-extensions`组件需要`JavaScript`依赖，因此请在卸载`Natrium Lib`时也请**按需**删除手动清除`angular.json`文件中的`JavaScript`引用，以免`Angular`项目无法正常编译。以下是`JavaScript`引用：
 
 > angular.json
+
+
     ...
     "scripts": [
         ...
