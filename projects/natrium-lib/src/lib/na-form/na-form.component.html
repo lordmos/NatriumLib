@@ -1,1 +1,17 @@
-<input class="input" type="date">
+<form [formGroup]="form" (ngSubmit)="submit(form.value)" novalidate>
+    <div class="field" *ngFor="let item of config.getConfig();let index = index">
+        <label class="label">{{item.label}}</label>
+        <div [ngSwitch]="item.type">
+            <div class="control" *ngSwitchCase="'textarea'">
+                <textarea class="textarea is-primary" type="text" formControlName="{{item.name}}" [placeholder]="item.placeholder ? item.placeholder : ''"></textarea>
+            </div>
+            <div class="control" *ngSwitchCase="'date'">
+                <input id="{{item.name}}" class="input is-primary" [type]="item.type" formControlName="{{item.name}}" [placeholder]="item.placeholder ? item.placeholder : ''">
+            </div>
+            <div class="control" *ngSwitchDefault>
+                <input class="input is-primary" [type]="item.type" formControlName="{{item.name}}" [placeholder]="item.placeholder ? item.placeholder : ''">
+            </div>
+        </div>
+    </div>
+    <button class="danger full large login" [disabled]="!form.valid" type="submit">提交</button>
+</form>

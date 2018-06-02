@@ -51,13 +51,14 @@
     "scripts": [
         ...
         "node_modules/bulma-extensions/bulma-accordion/dist/bulma-accordion.min.js",
-        "node_modules/bulma-extensions/bulma-calendar/dist/bulma-calendar.min.js",
+        "node_modules/bulma-calendar/dist/bulma-calendar.min.js",
         "node_modules/bulma-extensions/bulma-carousel/dist/bulma-carousel.min.js",
         "node_modules/bulma-extensions/bulma-tagsinput/dist/bulma-tagsinput.min.js"
         ...
     ],
     ...
 
+> `bulma-extensions`中的`bulma-calendar`并不是最新版本的源码貌似，缺少了时间变化的监听，因此我们单独依赖了`bulma-calendar`。已经向他们提了这个issue。
 
 ## Natrium基础组件集
 
