@@ -23,19 +23,33 @@ export class AppComponent {
 				type: "img",
 				name: "avatar",
 				btnIcon: "ion-ios-cloud-upload",
-				btnText: "文件上传",
+				btnText: "头像上传",
 				btnStyleCss: "is-warning",
 				action: this.onFileDetected,
-				fileMaxCount: 1,
+				fileMaxCount: 2,
 				fileMinCount: 1,
-				columnStyleCss: "is-12"
+				styleCss: "is-128x128 is-9by16",
+				columnStyleCss: "is-6"
+			}, {
+				label: "文件上传",
+				type: "file",
+				name: "files",
+				btnIcon: "ion-ios-cloud-upload",
+				btnText: "文件上传",
+				btnStyleCss: "is-dark",
+				action: this.onFileDetected,
+				styleCss: "is-warning",
+				fileMinCount: 1,
+				columnStyleCss: "is-6"
 			}, {
 				label: "昵称",
 				type: "text",
 				name: "nickname",
 				validators: [
 					Validators.required
-				]
+				],
+				columnStyleCss: "is-6",
+				styleCss: "is-warning",
 			}, {
 				label: "邮箱",
 				name: "email",
@@ -43,7 +57,9 @@ export class AppComponent {
 				validators: [
 					Validators.required,
 					Validators.email
-				]
+				],
+				styleCss: "is-warning",
+				columnStyleCss: "is-6"
 			}, {
 				label: "手机号码",
 				name: "tel",
@@ -52,7 +68,9 @@ export class AppComponent {
 					Validators.required,
 					Validators.pattern("^1[0-9]{10}$")
 				],
-				inputIcon: "ion-ios-call"
+				inputIcon: "ion-ios-call",
+				styleCss: "is-warning",
+				columnStyleCss: "is-6"
 			}, {
 				label: "验证码",
 				name: "code",
@@ -64,7 +82,9 @@ export class AppComponent {
 				],
 				action: this.search,
 				btnText: "手机验证码",
-				btnStyleCss: "is-primary"
+				btnStyleCss: "is-primary",
+				styleCss: "is-warning",
+				columnStyleCss: "is-6"
 			}, {
 				label: "密码信息",
 				name: "",
@@ -78,11 +98,13 @@ export class AppComponent {
 					Validators.minLength(6),
 					Validators.maxLength(20)
 				],
+				styleCss: "is-warning",
 				notEqualTo: "password"
 			}, {
 				label: "新密码",
 				name: "password",
 				type: "password",
+				styleCss: "is-warning",
 				validators: [
 					Validators.required,
 					Validators.minLength(6),
@@ -93,9 +115,14 @@ export class AppComponent {
 				name: "passwordConfirm",
 				type: "password",
 				equalTo: "password",
+				styleCss: "is-warning",
 				validators: [
 					Validators.required
 				]
+			}, {
+				label: "其他信息",
+				name: "",
+				type: "divider"
 			}, {
 				label: "生日",
 				name: "birthday",
@@ -103,12 +130,14 @@ export class AppComponent {
 				validators: [
 					Validators.required
 				],
+				styleCss: "is-warning",
 				lessThan: "today",
 				lessErrorText: "生日不可能超过今天"
 			}, {
 				label: "今天",
 				name: "today",
 				type: "date",
+				styleCss: "is-warning",
 				validators: [
 					Validators.required
 				]
@@ -116,6 +145,7 @@ export class AppComponent {
 				label: "简介",
 				name: "intro",
 				type: "textarea",
+				styleCss: "is-warning",
 				placeholder: "一句话介绍你自己",
 				columnStyleCss: "is-12"
 			}, {
@@ -132,13 +162,30 @@ export class AppComponent {
 				validators: [
 					Validators.required
 				],
+				styleCss: "is-warning",
 				selectDefaultText: "选择用户类型",
 				inputIcon: "ion-ios-people"
+			}, {
+				label: "性别",
+				name: "sex",
+				type: "radio",
+				styleCss: "is-warning",
+				options: [{
+					name: "男",
+					value: "male"
+				}, {
+					name: "女",
+					value: "female"
+				}],
+				validators: [
+					Validators.required
+				]
 			}, {
 				label: "",
 				checkboxText: "是否同意",
 				name: "agreement",
 				type: "checkbox",
+				styleCss: "is-warning",
 				columnStyleCss: "is-12",
 				validators: [
 					Validators.requiredTrue
