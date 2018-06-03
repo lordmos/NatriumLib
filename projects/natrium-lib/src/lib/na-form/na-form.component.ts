@@ -38,6 +38,8 @@ export class NaFormComponent implements OnInit {
 	}
 
 	@Output() onSubmit = new EventEmitter<any>();
+	@Output() onCancel = new EventEmitter<any>();
+
 	form: FormGroup;
 
 	constructor() {
@@ -59,10 +61,10 @@ export class NaFormComponent implements OnInit {
 				case "email":
 				case "textarea":
 				case "search":
+				case "date":
 				case "select":
 				case "radio":
 				case "checkbox":
-				case "date":
 					groups[configItem.name] = new FormControl(
 						this._data[configItem.name] ? this._data[configItem.name] : "",
 						configItem.validators
@@ -78,8 +80,11 @@ export class NaFormComponent implements OnInit {
 					}
 					break;
 				case "file":
-					break;
 				case "img":
+					groups[configItem.name] = new FormControl(
+						this._data[configItem.name] ? this._data[configItem.name] : [],
+						configItem.validators
+					)
 					break;
 			}
 		}
@@ -127,25 +132,46 @@ export class NaFormComponent implements OnInit {
 		this.form.controls[name].setValue(date);
 	}
 
-	call(configItem: NaFormConfigItem) {
+	call(configItem: NaFormConfigItem, ...args: Array<any>) {
 		if (!configItem.action) return;
-
 		configItem.action.call(
 			this.config.getContext(),
-			configItem.searchFrom ? this.form.controls[configItem.searchFrom].value : this.form.controls[configItem.name].value,
+			configItem.type === "search" ? (
+				configItem.searchFrom ?
+					this.form.controls[configItem.searchFrom].value :
+					this.form.controls[configItem.name].value
+			) : args,
 			configItem,
-			configItem.type === "search" ? null : (files: Array<string>) => {
-				console.log(files);
+			configItem.type === "search" ? null : (fileUrls: Array<{
+				fileUrl: string,
+				fileName: string
+			}>) => {
+				console.log(fileUrls)
+				fileUrls.forEach(file => {
+					this.form.controls[configItem.name].value.push(file)
+				});
 			}
 		);
+	}
+
+	onFileDetective(event: any, configItem: NaFormConfigItem) {
+		this.call(configItem, event.srcElement["files"]);
+	}
+
+	removeFile(itemName: string, index: number) {
+		this.form.controls[itemName].value.splice(index, 1);
 	}
 
 	submit(data: any) {
 		this.onSubmit.emit(data);
 	}
 
+	cancel() {
+		if (this.onCancel) this.onCancel.emit();
+	}
+
 	getKeys(obj: any): Array<string> {
-		if(!obj) return [];
+		if (!obj) return [];
 		return Object.keys(obj);
 	}
 

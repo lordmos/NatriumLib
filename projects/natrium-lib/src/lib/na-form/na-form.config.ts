@@ -23,6 +23,8 @@ export class NaFormConfig {
 
     private _showCancelBtn: boolean;
 
+    private _formColumnStyle: string;
+
     private _config: Array<NaFormConfigItem>;
 
     constructor(context: any) {
@@ -36,6 +38,7 @@ export class NaFormConfig {
         this._cancelBtnIcon = "";
         this._cancelBtnStyle = "";
         this._showCancelBtn = false;
+        this._formColumnStyle = "is-half-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd"
         this._config = [];
     }
 
@@ -59,6 +62,15 @@ export class NaFormConfig {
 
     getTitleStyle(): string {
         return this._titleStyle;
+    }
+
+    setFormColumnStyle(style: string): NaFormConfig {
+        this._formColumnStyle = style;
+        return this;
+    }
+
+    getFormColumnStyle(): string {
+        return this._formColumnStyle;
     }
 
     setConfig(config: Array<NaFormConfigItem>): NaFormConfig {
@@ -159,6 +171,7 @@ export type NaFormConfigItem = {
         name: string,
         value: any
     }>,
+    selectDefaultText?: string,
     /**
      * @param checkboxText 仅在type为checkbox时生效
      * */
@@ -200,6 +213,7 @@ export type NaFormConfigItem = {
             btnStyleCss: string
         },
         setFileList?: (files: Array<string>) => void
-    ) => void
+    ) => void,
+    fileMaxCount?: number
 }
 

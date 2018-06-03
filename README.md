@@ -79,6 +79,8 @@
 - [Carousel](https://wikiki.github.io/components/carousel/)
 - [TagsInput](https://wikiki.github.io/form/tagsinput/)
 
+同时，你在使用`Bulma-extensions`的某个组件，比如`Tooltip`，使用方式很简单，只需`<button class="button is-primary tooltip" data-tooltip="Tooltip Text">top tooltip</button>`即可，但是如果你需要双向绑定`Tooltip`的内容时，你需要使用`<button class="button is-primary tooltip" [attr.data-tooltip]="tooltipText">top tooltip</button>`来进行绑定。很多组件的数据都是在attribute中。
+
 组件具体的使用方式与样式请参照`Bulma`和`Bulma-extensions`的官方文档。
 
 ## Natrium图标集

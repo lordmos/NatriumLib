@@ -2,6 +2,18 @@ form {
     padding: 1rem;
 }
 
+figure {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+figure .delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
 .column {
     padding-top: 0;
 }
