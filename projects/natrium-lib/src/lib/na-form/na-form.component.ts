@@ -16,7 +16,7 @@ export class NaFormComponent implements OnInit {
 	@Input() set config(config: NaFormConfig) {
 		this._config = config;
 		this.form = new FormGroup(this.getFormControlGroups());
-		this.form.valueChanges.subscribe(value => this.onFormValueChange(value));
+		this.form.valueChanges.subscribe(value => this.formValueChange(value));
 		for (const ctrl in this.form.controls) {
 			this[ctrl] = this.form.controls[ctrl];
 		}
@@ -38,6 +38,7 @@ export class NaFormComponent implements OnInit {
 	}
 
 	@Output() onSubmit = new EventEmitter<any>();
+	@Output() onFormValueChange = new EventEmitter<any>();
 	@Output() onCancel = new EventEmitter<any>();
 
 	form: FormGroup;
@@ -91,7 +92,8 @@ export class NaFormComponent implements OnInit {
 		return groups;
 	}
 
-	onFormValueChange(value: any) {
+	formValueChange(value: any) {
+		if (this.onFormValueChange) this.onFormValueChange.emit(value);
 		this.configSelfValidatorError = {
 			valid: true
 		};
@@ -171,7 +173,7 @@ export class NaFormComponent implements OnInit {
 	}
 
 	submit(data: any) {
-		this.onSubmit.emit(data);
+		if (this.onSubmit) this.onSubmit.emit(data);
 	}
 
 	cancel() {
