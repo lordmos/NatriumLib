@@ -125,6 +125,13 @@ export class NaFormComponent implements OnInit {
 				};
 				this.configSelfValidatorError.valid = false;
 			}
+			if ((configItem.type === 'file' || configItem.type === 'img') && configItem.fileMinCount > this.form.controls[configItem.name].value.length) {
+				this.configSelfValidatorError[configItem.name].countError = {
+					error: true,
+					errorText: configItem.fileCountErrorText
+				};
+				this.configSelfValidatorError.valid = false;
+			}
 		}
 	}
 
@@ -146,10 +153,10 @@ export class NaFormComponent implements OnInit {
 				fileUrl: string,
 				fileName: string
 			}>) => {
-				console.log(fileUrls)
 				fileUrls.forEach(file => {
 					this.form.controls[configItem.name].value.push(file)
 				});
+				this.form.updateValueAndValidity();
 			}
 		);
 	}
@@ -160,6 +167,7 @@ export class NaFormComponent implements OnInit {
 
 	removeFile(itemName: string, index: number) {
 		this.form.controls[itemName].value.splice(index, 1);
+		this.form.updateValueAndValidity();
 	}
 
 	submit(data: any) {

@@ -18,7 +18,6 @@ export class AppComponent {
 	) {
 		this.config = new NaFormConfig(this)
 			.setTitle("基本信息")
-			// .setFormColumnStyle("is-half-tablet is-half-desktop is-one-quarter-widescreen")
 			.setConfig([{
 				label: "头像上传",
 				type: "img",
@@ -27,7 +26,9 @@ export class AppComponent {
 				btnText: "文件上传",
 				btnStyleCss: "is-warning",
 				action: this.onFileDetected,
-				fileMaxCount: 1
+				fileMaxCount: 1,
+				fileMinCount: 1,
+				columnStyleCss: "is-12"
 			}, {
 				label: "昵称",
 				type: "text",
@@ -64,6 +65,10 @@ export class AppComponent {
 				action: this.search,
 				btnText: "手机验证码",
 				btnStyleCss: "is-primary"
+			}, {
+				label: "密码信息",
+				name: "",
+				type: "divider"
 			}, {
 				label: "原密码",
 				name: "oldpassword",
@@ -111,7 +116,8 @@ export class AppComponent {
 				label: "简介",
 				name: "intro",
 				type: "textarea",
-				placeholder: "一句话介绍你自己"
+				placeholder: "一句话介绍你自己",
+				columnStyleCss: "is-12"
 			}, {
 				label: "用户类型",
 				name: "usertype",
@@ -133,6 +139,7 @@ export class AppComponent {
 				checkboxText: "是否同意",
 				name: "agreement",
 				type: "checkbox",
+				columnStyleCss: "is-12",
 				validators: [
 					Validators.requiredTrue
 				]

@@ -2,9 +2,11 @@
     <h1 [class]="config.getTitleStyle() ? config.getTitleStyle() : 'subtitle is-4'">
         {{config.getTitle()}}</h1>
     <div class="columns is-multiline">
-        <div *ngFor="let item of config.getConfig();let index = index" class="column {{config.getFormColumnStyle()}}">
-            <label class="label">{{item.label}}</label>
+        <div *ngFor="let item of config.getConfig();let index = index" class="column {{item.type === 'divider' ? 'is-12' : item.columnStyleCss ? item.columnStyleCss : 'is-half-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd'}}">
+            <label class="label" *ngIf="item.type !== 'divider'">{{item.label}}</label>
             <div [ngSwitch]="item.type">
+                <div *ngSwitchCase="'divider'" class="is-divider" [attr.data-content]="item.label">
+                </div>
                 <div *ngSwitchCase="'checkbox'">
                     <input [class]="item.styleCss ? 'is-checkradio' + item.styleCss : 'is-checkradio'" type="checkbox" [id]="item.name" [formControlName]="item.name">
                     <label [for]="item.name">{{item.checkboxText}}</label>
@@ -32,8 +34,7 @@
                 </div>
                 <div *ngSwitchCase="'search'" class="search">
                     <div class="control search-input" [class.has-icons-left]="item.inputIcon" [class.has-icons-right]="item.validators && item.validators.length> 0">
-                        <input [class]="item.styleCss ? 'input' + item.styleCss : 'input'" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length> 0" type="text"
-                            [formControlName]="item.name" [placeholder]="item.placeholder ? item.placeholder : '' ">
+                        <input [class]="item.styleCss ? 'input' + item.styleCss : 'input'" type="text" [formControlName]="item.name" [placeholder]="item.placeholder ? item.placeholder : '' " [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length> 0 || getKeys(configSelfValidatorError[item.name]).length > 0">
                         <span class="icon is-left" *ngIf="item.inputIcon">
                             <i [class]="item.inputIcon"></i>
                         </span>
@@ -50,7 +51,7 @@
                     </div>
                 </div>
                 <div *ngSwitchCase="'textarea'">
-                    <textarea [class]="item.styleCss ? 'textarea' + item.styleCss : 'textarea'" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length > 0"
+                    <textarea [class]="item.styleCss ? 'textarea' + item.styleCss : 'textarea'" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length> 0 || getKeys(configSelfValidatorError[item.name]).length > 0"
                         type="text" [formControlName]="item.name" [placeholder]="item.placeholder ? item.placeholder : '' "></textarea>
                 </div>
                 <div *ngSwitchCase="'file'">
@@ -98,9 +99,9 @@
                     </div>
                 </div>
                 <div *ngSwitchDefault class="control" [class.has-icons-left]="item.inputIcon" [class.has-icons-right]="item.validators && item.validators.length > 0">
-                    <input *ngIf="item.type === 'date'" [id]="item.name" [class]="item.styleCss ? 'input' + item.styleCss : 'input'" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length > 0"
+                    <input *ngIf="item.type === 'date'" [id]="item.name" [class]="item.styleCss ? 'input' + item.styleCss : 'input'" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length> 0 || getKeys(configSelfValidatorError[item.name]).length > 0"
                         [type]="item.type" [formControlName]="item.name" [placeholder]="item.placeholder ? item.placeholder : '' ">
-                    <input *ngIf="item.type !== 'date'" [class]="item.styleCss ? 'input' + item.styleCss : 'input'" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length > 0"
+                    <input *ngIf="item.type !== 'date'" [class]="item.styleCss ? 'input' + item.styleCss : 'input'" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length> 0 || getKeys(configSelfValidatorError[item.name]).length > 0"
                         [type]="item.type" [formControlName]="item.name" [placeholder]="item.placeholder ? item.placeholder : '' ">
                     <span class="icon is-left" *ngIf="item.inputIcon">
                         <i [class]="item.inputIcon"></i>
@@ -110,14 +111,14 @@
                     </span>
                 </div>
 
-                <div *ngIf="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) ">
+                <div *ngIf="item.type !== 'divider' && (form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched))">
                     <div *ngFor="let type of getKeys(form.controls[item.name].errors) ">
                         <p class="help is-danger ">
                             {{item.invalidErrorText && item.invalidErrorText[type] ? item.invalidErrorText[type] : "Error: " + type}}
                         </p>
                     </div>
                 </div>
-                <div *ngIf="form.controls[item.name].dirty || form.controls[item.name].touched">
+                <div *ngIf="item.type !== 'divider' && (form.controls[item.name].dirty || form.controls[item.name].touched || item.type === 'file' || item.type === 'img')">
                     <div *ngFor="let type of getKeys(configSelfValidatorError[item.name]) ">
                         <p class="help is-danger">
                             {{configSelfValidatorError[item.name][type].error && configSelfValidatorError[item.name][type].errorText ? configSelfValidatorError[item.name][type].errorText : "Error: " + type}}

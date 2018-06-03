@@ -23,8 +23,6 @@ export class NaFormConfig {
 
     private _showCancelBtn: boolean;
 
-    private _formColumnStyle: string;
-
     private _config: Array<NaFormConfigItem>;
 
     constructor(context: any) {
@@ -38,7 +36,6 @@ export class NaFormConfig {
         this._cancelBtnIcon = "";
         this._cancelBtnStyle = "";
         this._showCancelBtn = false;
-        this._formColumnStyle = "is-half-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd"
         this._config = [];
     }
 
@@ -62,15 +59,6 @@ export class NaFormConfig {
 
     getTitleStyle(): string {
         return this._titleStyle;
-    }
-
-    setFormColumnStyle(style: string): NaFormConfig {
-        this._formColumnStyle = style;
-        return this;
-    }
-
-    getFormColumnStyle(): string {
-        return this._formColumnStyle;
     }
 
     setConfig(config: Array<NaFormConfigItem>): NaFormConfig {
@@ -121,7 +109,8 @@ export type NaFormConfigItem = {
     name: string,
     type: "text" | "number" | "tel" | "password" | "email" | "textarea"
     | "select" | "radio" | "checkbox" | "date"
-    | "file" | "img" | "search",
+    | "file" | "img" | "search" 
+    | "divider",
     /**
      * @param placeholder 仅在type为text\number\tel\password\email\textarea时生效
      * */
@@ -179,7 +168,7 @@ export type NaFormConfigItem = {
     /**
      * @param dateLang 仅在type为date时生效
      * */
-    dateLang?: "ar" | "bn" | "de" | "en" | "es" | "fa" | "fr" | "hi" | "hr" | "hu" | "id" | "it"
+    dateLang? : "ar" | "bn" | "de" | "en" | "es" | "fa" | "fr" | "hi" | "hr" | "hu" | "id" | "it"
     | "ja" | "nl" | "pt" | "pt-BR" | "ru" | "sr" | "th" | "tr" | "zh-cn",
     /**
      * @param styleCss 用于组件的颜色渲染
@@ -214,6 +203,10 @@ export type NaFormConfigItem = {
         },
         setFileList?: (files: Array<string>) => void
     ) => void,
-    fileMaxCount?: number
+    fileMaxCount?: number,
+    fileMinCount?: number,
+    fileCountErrorText?: string,
+
+    columnStyleCss?: string
 }
 
