@@ -70,14 +70,14 @@ export class NaFormConfig {
         return this._config;
     }
 
-    setConfirmBtnConfig(btnText: string, btnIcon?: string, btnStyleCss?: string) {
+    setConfirmBtnConfig(btnText: string, btnIcon?: string, btnStyleCss?: string): NaFormConfig {
         this._confirmBtnText = btnText;
         if (btnIcon) this._confirmBtnIcon = btnIcon;
         if (btnStyleCss) this._confirmBtnStyle = btnStyleCss;
         return this;
     }
 
-    getConfirmBtnConfig() {
+    getConfirmBtnConfig(): { btnText: string, btnIcon: string, btnStyleCss: string } {
         return {
             btnText: this._confirmBtnText,
             btnIcon: this._confirmBtnIcon,
@@ -85,7 +85,7 @@ export class NaFormConfig {
         }
     }
 
-    setCancelBtnConfig(showCancelBtn: boolean, btnText?: string, btnIcon?: string, btnStyleCss?: string) {
+    setCancelBtnConfig(showCancelBtn: boolean, btnText?: string, btnIcon?: string, btnStyleCss?: string): NaFormConfig {
         this._showCancelBtn = showCancelBtn;
         if (btnText) this._cancelBtnText = btnText;
         if (btnIcon) this._cancelBtnIcon = btnIcon;
@@ -93,7 +93,7 @@ export class NaFormConfig {
         return this;
     }
 
-    getCancelBtnConfig() {
+    getCancelBtnConfig(): { showCancelBtn: boolean, btnText: string, btnIcon: string, btnStyleCss: string } {
         return {
             showCancelBtn: this._showCancelBtn,
             btnText: this._cancelBtnText,
@@ -109,7 +109,7 @@ export type NaFormConfigItem = {
     name: string,
     type: "text" | "number" | "tel" | "password" | "email" | "textarea"
     | "select" | "radio" | "checkbox" | "date"
-    | "file" | "img" | "search" 
+    | "file" | "img" | "search"
     | "divider",
     /**
      * @param placeholder 仅在type为text\number\tel\password\email\textarea时生效
@@ -168,7 +168,7 @@ export type NaFormConfigItem = {
     /**
      * @param dateLang 仅在type为date时生效
      * */
-    dateLang? : "ar" | "bn" | "de" | "en" | "es" | "fa" | "fr" | "hi" | "hr" | "hu" | "id" | "it"
+    dateLang?: "ar" | "bn" | "de" | "en" | "es" | "fa" | "fr" | "hi" | "hr" | "hu" | "id" | "it"
     | "ja" | "nl" | "pt" | "pt-BR" | "ru" | "sr" | "th" | "tr" | "zh-cn",
     /**
      * @param styleCss 用于组件的颜色渲染
@@ -177,11 +177,11 @@ export type NaFormConfigItem = {
     /**
      * @param btnText 仅在type为file\img\search时生效
      * */
-    btnText?: string
+    btnText?: string,
     /**
      * @param btnIcon 仅在type为file\img\search时生效
      * */
-    btnIcon?: string
+    btnIcon?: string,
     /**
      * @param btnStyleCss 仅在type为file\img\search时生效
      * */
@@ -207,6 +207,6 @@ export type NaFormConfigItem = {
     fileMinCount?: number,
     fileCountErrorText?: string,
 
-    columnStyleCss?: string
+    columnStyleCss?: string,
 }
 
