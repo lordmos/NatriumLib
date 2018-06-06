@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { NaFormConfig, NaFormConfigItem } from './na-form.config';
 import { FormControl, FormGroup } from '@angular/forms';
+import { NaFormConfig, NaFormConfigItem } from './na-form.config';
 
 @Component({
 	selector: 'na-form',

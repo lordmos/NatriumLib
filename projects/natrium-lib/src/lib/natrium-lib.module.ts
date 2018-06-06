@@ -7,6 +7,8 @@ import { NaOutletComponent } from './na-outlet/na-outlet.component';
 import { NaPaginationComponent } from './na-pagination/na-pagination.component';
 import { NaFormComponent } from './na-form/na-form.component';
 
+import { NaTableComponent } from './na-table/na-table.component';
+
 @NgModule({
 	imports: [
 		CommonModule,
@@ -15,12 +17,14 @@ import { NaFormComponent } from './na-form/na-form.component';
 		RouterModule
 	],
 	declarations: [
+		NaTableComponent,
 		NaFormComponent,
 		NaPaginationComponent,
 		NaOutletComponent,
 		NaComponentHostDirective
 	],
 	exports: [
+		NaTableComponent,
 		NaFormComponent,
 		NaPaginationComponent,
 		NaOutletComponent,
