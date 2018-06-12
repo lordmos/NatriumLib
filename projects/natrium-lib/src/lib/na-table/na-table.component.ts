@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, HostListener } from '@angular/core';
 import { NaTableConfig, NaTableAction } from './na-table.config';
 
 @Component({
@@ -27,11 +27,26 @@ export class NaTableComponent implements OnInit {
 
 	anyoneSelected: boolean;
 
-	constructor() { }
+	constructor(private elementRef: ElementRef) { }
 
 	ngOnInit() {
 		this.selectAll = false;
 		this.anyoneSelected = false;
+	}
+
+	ngAfterViewInit() {
+		this.onResize();
+	}
+
+	@HostListener('window:resize') onResize() {
+		const fakeHeader = this.elementRef.nativeElement.getElementsByClassName("na-fake-header")[0];
+		const header = this.elementRef.nativeElement.getElementsByTagName("thead")[0];
+		fakeHeader.style.width = header.clientWidth + "px";
+		const headerCells = header.children[0].cells;
+		const fakeHeaderCells = fakeHeader.children;
+		for (let i = 0; i < headerCells.length; i++) {
+			fakeHeaderCells[i].style.cssText = document.defaultView.getComputedStyle(headerCells[i], "").cssText;
+		}
 	}
 
 	onSelectAllChange() {
@@ -66,7 +81,15 @@ export class NaTableComponent implements OnInit {
 	}
 
 	call(action: NaTableAction, arg?: any) {
-		action.callback.call(this.config.getContext(), arg);
+		this.callFunc(action.callback, arg);
+	}
+
+	callFunc(func: any, arg?: any) {
+		func.call(this.config.context, arg);
+	}
+
+	onPageChange(page: number) {
+		this.callFunc(this.config.paginationConfig.onPageChange, page);
 	}
 
 }

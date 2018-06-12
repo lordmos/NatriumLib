@@ -53,7 +53,7 @@ export class NaFormComponent implements OnInit {
 
 	getFormControlGroups() {
 		let groups = {};
-		for (const configItem of this.config.getConfig()) {
+		for (const configItem of this.config.configItems) {
 			switch (configItem.type) {
 				case "text":
 				case "number":
@@ -97,7 +97,7 @@ export class NaFormComponent implements OnInit {
 		this.configSelfValidatorError = {
 			valid: true
 		};
-		for (const configItem of this._config.getConfig()) {
+		for (const configItem of this._config.configItems) {
 			this.configSelfValidatorError[configItem.name] = {};
 			if (configItem.equalTo && value[configItem.name] !== value[configItem.equalTo]) {
 				this.configSelfValidatorError[configItem.name].equalTo = {
@@ -144,7 +144,7 @@ export class NaFormComponent implements OnInit {
 	call(configItem: NaFormConfigItem, ...args: Array<any>) {
 		if (!configItem.action) return;
 		configItem.action.call(
-			this.config.getContext(),
+			this.config.context,
 			configItem.type === "search" ? (
 				configItem.searchFrom ?
 					this.form.controls[configItem.searchFrom].value :

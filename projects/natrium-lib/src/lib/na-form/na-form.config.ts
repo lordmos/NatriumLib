@@ -39,7 +39,7 @@ export class NaFormConfig {
         this._config = [];
     }
 
-    getContext(): any {
+    get context(): any {
         return this._context;
     }
 
@@ -48,7 +48,7 @@ export class NaFormConfig {
         return this;
     }
 
-    getTitle(): string {
+    get title(): string {
         return this._title;
     }
 
@@ -57,7 +57,7 @@ export class NaFormConfig {
         return this;
     }
 
-    getTitleStyle(): string {
+    get titleStyle(): string {
         return this._titleStyle;
     }
 
@@ -66,7 +66,7 @@ export class NaFormConfig {
         return this;
     }
 
-    getConfig(): Array<NaFormConfigItem> {
+    get configItems(): Array<NaFormConfigItem> {
         return this._config;
     }
 
@@ -77,7 +77,7 @@ export class NaFormConfig {
         return this;
     }
 
-    getConfirmBtnConfig(): { btnText: string, btnIcon: string, btnStyleCss: string } {
+    get confirmBtnConfig(): { btnText: string, btnIcon: string, btnStyleCss: string } {
         return {
             btnText: this._confirmBtnText,
             btnIcon: this._confirmBtnIcon,
@@ -93,7 +93,7 @@ export class NaFormConfig {
         return this;
     }
 
-    getCancelBtnConfig(): { showCancelBtn: boolean, btnText: string, btnIcon: string, btnStyleCss: string } {
+    get cancelBtnConfig(): { showCancelBtn: boolean, btnText: string, btnIcon: string, btnStyleCss: string } {
         return {
             showCancelBtn: this._showCancelBtn,
             btnText: this._cancelBtnText,

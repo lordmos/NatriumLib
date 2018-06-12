@@ -1,9 +1,18 @@
 <div class="na-table">
     <div class="na-table-container">
         <div class="na-table-header">
-            <h1 [class]="config.getTitleStyle() ? config.getTitleStyle() : 'title'">{{config.getTitle()}}</h1>
+            <h1 [class]="config.titleStyle ? config.titleStyle : 'title'">{{config.title}}</h1>
         </div>
-        <div class="na-table-content" [class.has-top]="config.getTitle()" [class.has-bottom]="config.getMultiSelectActions().length > 0 && !!anyoneSelected || config.getNormalActions().length > 0 ">
+        <div class="na-table-content" [class.has-top]="config.title" [class.has-bottom]="config.multiSelectActions.length > 0 && !!anyoneSelected || config.normalActions.length > 0 ">
+            <div class="na-fake-header">
+                <th *ngIf="config.isNeedMultiSelect()">
+                    <input type="checkbox" class="is-checkradio" [(ngModel)]="selectAll">
+                    <label (click)="onSelectAllChange()"></label>
+                </th>
+                <th *ngIf="config.isNeedShowIndex()">#</th>
+                <th *ngFor="let configItem of config.configItems">{{configItem.label}}</th>
+                <th *ngIf="config.singleSelectActions.length > 0"> </th>
+            </div>
             <table class="table is-striped">
                 <thead>
                     <tr>
@@ -11,9 +20,9 @@
                             <input type="checkbox" class="is-checkradio" [(ngModel)]="selectAll">
                             <label (click)="onSelectAllChange()"></label>
                         </th>
-                        <th *ngIf="config.isNeedShowIndex()">{{config.getIndexText()}}</th>
-                        <th *ngFor="let configItem of config.getConfig()"> {{configItem.label}} </th>
-                        <th *ngFor="let action of config.getSingleSelectActions()"> </th>
+                        <th *ngIf="config.isNeedShowIndex()">#</th>
+                        <th *ngFor="let configItem of config.configItems">{{configItem.label}}</th>
+                        <th *ngIf="config.singleSelectActions.length > 0"> </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -23,14 +32,14 @@
                             <label (click)="onSelectChange(index)"></label>
                         </th>
                         <th *ngIf="config.isNeedShowIndex()">{{index + 1}}</th>
-                        <td *ngFor="let configItem of config.getConfig()">
+                        <td *ngFor="let configItem of config.configItems">
                             {{configItem.pipe ? call(configItem.pipe, dataItem[configItem.name]) : dataItem[configItem.name]}}
                         </td>
-                        <td *ngFor="let action of config.getSingleSelectActions()">
-                            <a [class]="action.btnStyleCss ? 'button is-small ' + action.btnStyleCss : 'button is-small'" (click)="call(action, index)">
+                        <td *ngIf="config.singleSelectActions.length > 0">
+                            <a *ngFor="let action of config.singleSelectActions" [class]="action.btnStyleCss ? 'button is-small ' + action.btnStyleCss : 'button is-small'" (click)="call(action, index)">
                                 <span class="icon is-small" *ngIf="action.btnIcon">
-                                            <i [class]="action.btnIcon"></i>
-                                        </span>
+                                    <i [class]="action.btnIcon"></i>
+                                </span>
                                 <span>{{action.btnText}}</span>
                             </a>
                         </td>
@@ -38,10 +47,10 @@
                 </tbody>
             </table>
         </div>
-        <div class="na-table-footer" *ngIf="config.getMultiSelectActions().length > 0  && !!anyoneSelected || config.getNormalActions().length > 0">
-            <div class="field is-grouped" *ngIf="config.getMultiSelectActions().length > 0 && !!anyoneSelected">
-                <p class="control" *ngFor="let action of config.getMultiSelectActions()">
-                    <a [class]="action.btnStyleCss ? 'button ' + action.btnStyleCss : 'button'" (click)="callMulti(action)">
+        <div class="na-table-footer" *ngIf="config.multiSelectActions.length > 0  && !!anyoneSelected || config.normalActions.length > 0">
+            <div class="field is-grouped" *ngIf="config.multiSelectActions.length > 0 && !!anyoneSelected">
+                <p class="control">
+                    <a *ngFor="let action of config.multiSelectActions" [class]="action.btnStyleCss ? 'button ' + action.btnStyleCss : 'button'" (click)="callMulti(action)">
                         <span class="icon is-small" *ngIf="action.btnIcon">
                             <i [class]="action.btnIcon"></i>
                         </span>
@@ -49,15 +58,18 @@
                     </a>
                 </p>
             </div>
-            <div class="field is-grouped" *ngIf="config.getNormalActions().length > 0 && !anyoneSelected">
-                <p class="control" *ngFor="let action of config.getNormalActions()">
-                    <a [class]="action.btnStyleCss ? 'button ' + action.btnStyleCss : 'button'" (click)="call(action)">
+            <div class="field is-grouped" *ngIf="config.normalActions.length > 0 && !anyoneSelected">
+                <p class="control">
+                    <a *ngFor="let action of config.normalActions" [class]="action.btnStyleCss ? 'button ' + action.btnStyleCss : 'button'" (click)="call(action)">
                         <span class="icon is-small" *ngIf="action.btnIcon">
-                                    <i [class]="action.btnIcon"></i>
-                                </span>
+                            <i [class]="action.btnIcon"></i>
+                        </span>
                         <span>{{action.btnText}}</span>
                     </a>
                 </p>
+                <div class="pagination-container" *ngIf="!!config.paginationConfig">
+                    <na-pagination [currentPage]="config.paginationConfig.currentPage" [totalPage]="config.paginationConfig.totalPage" [maxLength]="config.paginationConfig.maxLength" (onPageChange)="onPageChange($event)"></na-pagination>
+                </div>
             </div>
         </div>
     </div>

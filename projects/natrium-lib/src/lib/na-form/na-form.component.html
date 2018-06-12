@@ -1,8 +1,8 @@
 <form [formGroup]="form" (ngSubmit)="submit(form.value)" novalidate>
-    <h1 [class]="config.getTitleStyle() ? config.getTitleStyle() : 'subtitle is-4'">
-        {{config.getTitle()}}</h1>
+    <h1 [class]="config.titleStyle ? config.titleStyle : 'subtitle is-4'">
+        {{config.title}}</h1>
     <div class="columns is-multiline">
-        <div *ngFor="let item of config.getConfig();let index = index" class="column {{item.type === 'divider' ? 'is-12' : item.columnStyleCss ? item.columnStyleCss : 'is-half-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd'}}">
+        <div *ngFor="let item of config.configItems;let index = index" class="column {{item.type === 'divider' ? 'is-12' : item.columnStyleCss ? item.columnStyleCss : 'is-half-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd'}}">
             <label class="label" *ngIf="item.type !== 'divider'">{{item.label}}</label>
             <div [ngSwitch]="item.type">
                 <div *ngSwitchCase="'divider'" class="is-divider" [attr.data-content]="item.label">
@@ -130,18 +130,18 @@
             </div>
         </div>
         <div class="column is-12">
-            <button class="button {{config.getConfirmBtnConfig().btnStyleCss ? config.getConfirmBtnConfig().btnStyleCss : 'is-primary'}} {{config.getCancelBtnConfig().showCancelBtn ? 'half left' : 'block'}}" [disabled]="!form.valid || !configSelfValidatorError.valid && form.valid"
+            <button class="button {{config.confirmBtnConfig.btnStyleCss ? config.confirmBtnConfig.btnStyleCss : 'is-primary'}} {{config.cancelBtnConfig.showCancelBtn ? 'half left' : 'block'}}" [disabled]="!form.valid || !configSelfValidatorError.valid && form.valid"
                 type="submit">
-                <span class="icon" *ngIf="config.getConfirmBtnConfig().btnIcon">
-                    <i [class]="config.getConfirmBtnConfig().btnIcon"></i>
+                <span class="icon" *ngIf="config.confirmBtnConfig.btnIcon">
+                    <i [class]="config.confirmBtnConfig.btnIcon"></i>
                 </span>
-                <span>{{config.getConfirmBtnConfig().btnText}}</span>
+                <span>{{config.confirmBtnConfig.btnText}}</span>
             </button>
-            <a class="button half right {{config.getCancelBtnConfig().btnStyleCss ? config.getCancelBtnConfig().btnStyleCss : ''}}" *ngIf="config.getCancelBtnConfig().showCancelBtn" (click)="cancel()">
-                <span class="icon" *ngIf="config.getCancelBtnConfig().btnIcon">
-                    <i [class]="config.getCancelBtnConfig().btnIcon"></i>
+            <a class="button half right {{config.cancelBtnConfig.btnStyleCss ? config.cancelBtnConfig.btnStyleCss : ''}}" *ngIf="config.cancelBtnConfig.showCancelBtn" (click)="cancel()">
+                <span class="icon" *ngIf="config.cancelBtnConfig.btnIcon">
+                    <i [class]="config.cancelBtnConfig.btnIcon"></i>
                 </span>
-                <span>{{config.getCancelBtnConfig().btnText}}</span>
+                <span>{{config.cancelBtnConfig.btnText}}</span>
             </a>
         </div>
     </div>

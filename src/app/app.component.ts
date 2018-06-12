@@ -14,6 +14,10 @@ export class AppComponent {
 	config: NaTableConfig;
 	data: any;
 
+	onPageChange(page: number) {
+		console.log(page);
+	}
+
 	constructor() {
 		this.data = [{
 			nickname: "lennon",
@@ -129,18 +133,33 @@ export class AppComponent {
 			.setSingleSelectActions([{
 				callback: this.edit,
 				btnText: "编辑"
+			}, {
+				callback: this.detail,
+				btnText: "详情"
 			}])
-			// .setNormalActions([{
-			// 	callback: this.add,
-			// 	btnText: "添加用户"
-			// }])
+			.setNormalActions([{
+				callback: this.add,
+				btnText: "添加用户",
+				btnIcon: "ion-ios-add",
+				btnStyleCss: "is-small is-info"
+			}])
 			.setMultiSelectActions([{
 				callback: this.delete,
 				btnText: "删除"
 			}])
+			.setPaginationConfig({
+				currentPage: 0,
+				totalPage: 100,
+				maxLength: 9,
+				onPageChange: this.onPageChange
+			})
 	}
 
 	edit(index: number): void {
+		console.log(index);
+	}
+
+	detail(index: number): void {
 		console.log(index);
 	}
 

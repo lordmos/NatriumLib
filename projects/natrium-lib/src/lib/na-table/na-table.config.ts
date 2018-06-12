@@ -1,5 +1,3 @@
-import { Pipe } from "@angular/core";
-
 export class NaTableConfig {
 
     private _context: any;
@@ -12,15 +10,15 @@ export class NaTableConfig {
 
     private _normalActions: Array<NaTableAction>;
 
-    private _singalActions: Array<NaTableAction>;
+    private _singleSelectActions: Array<NaTableAction>;
 
     private _needShowIndex: boolean;
 
-    private _indexText: string;
-
     private _needMultiSelect: boolean;
 
-    private _multiActions: Array<NaTableAction>;
+    private _multiSelectActions: Array<NaTableAction>;
+
+    private _paginationConfig: NaPaginationConfig;
 
     constructor(context: any) {
         this._context = context;
@@ -28,14 +26,14 @@ export class NaTableConfig {
         this._titleStyle = "";
         this._config = [];
         this._needShowIndex = false;
-        this._indexText = "";
         this._normalActions = [];
-        this._singalActions = [];
+        this._singleSelectActions = [];
         this._needMultiSelect = false;
-        this._multiActions = [];
+        this._multiSelectActions = [];
+        this._paginationConfig = null;
     }
 
-    getContext(): any {
+    get context(): any {
         return this._context;
     }
 
@@ -44,17 +42,8 @@ export class NaTableConfig {
         return this;
     }
 
-    getTitle(): string {
+    get title(): string {
         return this._title;
-    }
-
-    setIndexText(indexText: string): NaTableConfig {
-        this._indexText = indexText;
-        return this;
-    }
-
-    getIndexText(): string {
-        return this._indexText;
     }
 
     setTitleStyle(style: string): NaTableConfig {
@@ -62,8 +51,17 @@ export class NaTableConfig {
         return this;
     }
 
-    getTitleStyle(): string {
+    get titleStyle(): string {
         return this._titleStyle;
+    }
+
+    setPaginationConfig(paginationConfig: NaPaginationConfig): NaTableConfig {
+        this._paginationConfig = paginationConfig;
+        return this;
+    }
+
+    get paginationConfig(): NaPaginationConfig {
+        return this._paginationConfig;
     }
 
     setConfig(config: Array<NaTableConfigItem>): NaTableConfig {
@@ -71,7 +69,7 @@ export class NaTableConfig {
         return this;
     }
 
-    getConfig(): Array<NaTableConfigItem> {
+    get configItems(): Array<NaTableConfigItem> {
         return this._config;
     }
 
@@ -94,12 +92,12 @@ export class NaTableConfig {
     }
 
     setMultiSelectActions(actions: Array<NaTableAction>): NaTableConfig {
-        this._multiActions = actions;
+        this._multiSelectActions = actions;
         return this;
     }
 
-    getMultiSelectActions(): Array<NaTableAction> {
-        return this._multiActions;
+    get multiSelectActions(): Array<NaTableAction> {
+        return this._multiSelectActions;
     }
 
     setNormalActions(actions: Array<NaTableAction>): NaTableConfig {
@@ -107,17 +105,17 @@ export class NaTableConfig {
         return this;
     }
 
-    getNormalActions(): Array<NaTableAction> {
+    get normalActions(): Array<NaTableAction> {
         return this._normalActions;
     }
 
     setSingleSelectActions(actions: Array<NaTableAction>): NaTableConfig {
-        this._singalActions = actions;
+        this._singleSelectActions = actions;
         return this;
     }
 
-    getSingleSelectActions(): Array<NaTableAction> {
-        return this._singalActions;
+    get singleSelectActions(): Array<NaTableAction> {
+        return this._singleSelectActions;
     }
 
 }
@@ -133,4 +131,11 @@ export type NaTableAction = {
     btnText: string,
     btnIcon?: string,
     btnStyleCss?: string
+}
+
+export type NaPaginationConfig = {
+    currentPage: number,
+    totalPage: number,
+    maxLength: number,
+    onPageChange: (page:number) => void
 }

@@ -14,28 +14,41 @@
     position: relative;
 }
 
-.na-table-header {
-    z-index: 2;
-}
-
 .na-table-content {
-    overflow: auto;
     position: absolute;
     top: 0;
     bottom: 0;
     width: 100%;
+    overflow: auto;
+}
+
+.na-fake-header {
+    position: sticky;
+    left: 0;
+    top: 0;
+    background: white;
+    min-width: 100%;
+    z-index: 2;
 }
 
 .na-table-content table {
     min-width: 100%;
+    top: 0;
+    margin-bottom: 0;
+    position: absolute;
 }
 
-.na-table-content table thead {
-    scroll-behavior: unset;
+.na-table-content table thead {}
+
+.na-table-content table tbody {}
+
+.na-table-content table th,
+.na-table-content table td {
+    white-space: nowrap;
 }
 
-.na-table-content table tbody {
-    overflow: auto;
+.na-table-content table td .button {
+    margin-right: 1rem;
 }
 
 .na-table-content.has-top {
@@ -50,4 +63,13 @@
     width: 100%;
     position: absolute;
     bottom: 0;
+}
+
+.na-table .control .button {
+    margin-right: 1rem;
+}
+
+.na-table .pagination-container {
+    position: absolute;
+    right: 0;
 }
