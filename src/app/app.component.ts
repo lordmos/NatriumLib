@@ -14,10 +14,6 @@ export class AppComponent {
 	config: NaTableConfig;
 	data: any;
 
-	onPageChange(page: number) {
-		console.log(page);
-	}
-
 	constructor() {
 		this.data = [{
 			nickname: "lennon",
@@ -28,96 +24,12 @@ export class AppComponent {
 			age: 28,
 			time: new Date().getTime()
 		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
-			time: new Date().getTime()
-		}, {
-			nickname: "mos",
-			age: 28,
+			nickname: "james",
+			age: 38,
 			time: new Date().getTime()
 		}];
 		this.config = new NaTableConfig(this)
-			// .setTitle("用户列表")
+			.setTitle("用户列表")
 			.needMultiSelect(true)
 			.needShowIndex(true)
 			.setConfig([{
@@ -170,6 +82,11 @@ export class AppComponent {
 	delete(indexs: Array<number>) {
 		console.log(indexs);
 	}
+
+	onPageChange(page: number) {
+		console.log(page);
+	}
+
 
 	/**
 	 * NaForm

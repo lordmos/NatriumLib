@@ -18,7 +18,7 @@ export class NaTableConfig {
 
     private _multiSelectActions: Array<NaTableAction>;
 
-    private _paginationConfig: NaPaginationConfig;
+    private _paginationConfig: NaTablePaginationConfig;
 
     constructor(context: any) {
         this._context = context;
@@ -55,12 +55,12 @@ export class NaTableConfig {
         return this._titleStyle;
     }
 
-    setPaginationConfig(paginationConfig: NaPaginationConfig): NaTableConfig {
+    setPaginationConfig(paginationConfig: NaTablePaginationConfig): NaTableConfig {
         this._paginationConfig = paginationConfig;
         return this;
     }
 
-    get paginationConfig(): NaPaginationConfig {
+    get paginationConfig(): NaTablePaginationConfig {
         return this._paginationConfig;
     }
 
@@ -133,7 +133,7 @@ export type NaTableAction = {
     btnStyleCss?: string
 }
 
-export type NaPaginationConfig = {
+export type NaTablePaginationConfig = {
     currentPage: number,
     totalPage: number,
     maxLength: number,

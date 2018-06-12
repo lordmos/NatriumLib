@@ -202,7 +202,7 @@
 
 由于`NaForm`只是配置数据，需要在构造函数中传入你的作用域用于驱动你作用域中的相关方法，比如回调函数。通常直接传入`Component`的`this`即可。
 
-> getContext(): any
+> context: any
 
 获取你设置的作用域。通常是你的`Component`作用域。
 
@@ -210,7 +210,7 @@
 
 设置表单的标题。返回调用函数的`NaFormConfig`来支持链式调用。
 
-> getTitle(): string
+> title: string
 
 返回表单的标题。
 
@@ -220,7 +220,7 @@
 
 例如`config.setTitleStyle("title is-4")`将标题设置为四号主标题字体，或者`config.setTitleStyle("subtitle is-1")`将标题设置为一号副标题。具体设置方式请参照[Bulma Title风格化设置文档](https://bulma.io/documentation/elements/title/)。
 
-> getTitleStyle(): string
+> titleStyle: string
 
 获取表单标题的样式。
 
@@ -228,7 +228,7 @@
 
 设置表单项的配置列表。每个表单项都有自己的表单类型，比如`text`\\`date`\\`select`\\`img`等。通过`NaFormConfigItem`可以控制每一个表单项的数据类型和展示方式，具体设置方式请参照[NaFormConfigItem 文档](./na-form-config-item.md)>。返回调用函数的`NaFormConfig`来支持链式调用。
 
-> getConfig(): Array<NaFormConfigItem>
+> configItems: Array<NaFormConfigItem>
 
 获取表单项配置列表。
 
@@ -236,7 +236,7 @@
 
 设置确认按钮的文案、图标、样式。返回调用函数的`NaFormConfig`来支持链式调用。
 
-> getConfirmBtnConfig(): { btnText: string, btnIcon: string, btnStyleCss: string }
+> confirmBtnConfig: { btnText: string, btnIcon: string, btnStyleCss: string }
 
 获取确认按钮的文案、图标、样式。
 
@@ -244,6 +244,6 @@
 
 设置取消按钮的展示和消失，以及文案、图标、样式。返回调用函数的`NaFormConfig`来支持链式调用。
 
-> getCancelBtnConfig(): { showCancelBtn: boolean, btnText: string, btnIcon: string, btnStyleCss: string }
+> cancelBtnConfig: { showCancelBtn: boolean, btnText: string, btnIcon: string, btnStyleCss: string }
 
 获取取消按钮的展示和消失，以及文案、图标、样式。
