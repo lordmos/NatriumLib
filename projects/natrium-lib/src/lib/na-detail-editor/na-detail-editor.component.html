@@ -1,0 +1,153 @@
+<form [formGroup]="form" novalidate>
+    <h1 [class]="config.titleStyle ? config.titleStyle : 'subtitle is-4'">
+        {{config.title}}</h1>
+    <div class="columns is-multiline">
+        <div *ngFor="let item of config.configItems;let index = index" class="column is-12">
+            <label class="label" *ngIf="item.type !== 'divider'">{{item.label}}</label>
+            <div [ngSwitch]="item.type">
+                <div *ngSwitchCase="'divider'" class="is-divider" [attr.data-content]="item.label"></div>
+                <div *ngSwitchCase="'radio'">
+                    <div *ngIf="item.editable && editStatusMap[item.name]">
+                        <span *ngFor="let option of item.options; let index = index">
+                            <input [class]="item.styleCss ? 'is-checkradio ' + item.styleCss : 'is-checkradio'" [id]="item.name + index" type="radio" [formControlName]="item.name" [value]="option.value">
+                            <label [for]="item.name + index">{{option.name}}</label>
+                        </span>
+                    </div>
+                    <p *ngIf="!editStatusMap[item.name]" (click)="onEditClicked(item)">
+                        {{getOptionName(item, form.controls[item.name].value)}}
+                        <span class="icon {{item.editIconStyleCss ? item.editIconStyleCss : 'has-text-info'}}" *ngIf="item.editable">
+                            <i class="ion-ios-create"></i>
+                        </span>
+                    </p>
+                </div>
+                <div *ngSwitchCase="'select'">
+                    <div *ngIf="item.editable && editStatusMap[item.name]" class="control" [class.has-icons-left]="item.inputIcon">
+                        <div [class]="item.styleCss ? 'select ' + item.styleCss : 'select block'">
+                            <select [formControlName]="item.name" class="block">
+								<option value="" disabled>{{item.selectDefaultText}}</option>
+								<option *ngFor="let option of item.options" [value]="option.value">
+									{{option.name}}
+								</option>
+							</select>
+                            <span class="icon is-left" *ngIf="item.inputIcon">
+								<i [class]="item.inputIcon"></i>
+							</span>
+                        </div>
+                    </div>
+                    <p *ngIf="!editStatusMap[item.name]" (click)="onEditClicked(item)">
+                        {{getOptionName(item, form.controls[item.name].value)}}
+                        <span class="icon {{item.editIconStyleCss ? item.editIconStyleCss : 'has-text-info'}}" *ngIf="item.editable">
+                            <i class="ion-ios-create"></i>
+                        </span>
+                    </p>
+                </div>
+                <div *ngSwitchCase="'textarea'">
+                    <textarea *ngIf="item.editable && editStatusMap[item.name]" [class]="item.styleCss ? 'textarea ' + item.styleCss : 'textarea'" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length> 0 || getKeys(configSelfValidatorError[item.name]).length > 0"
+                        type="text" [formControlName]="item.name" [placeholder]="item.placeholder ? item.placeholder : '' "></textarea>
+                    <p *ngIf="!editStatusMap[item.name]" (click)="onEditClicked(item)">
+                        {{_dataCopy[item.name] ? item.type === 'date' ? getLocalDateTime(_dataCopy[item.name]) : _dataCopy[item.name] : item.defaultText? item.defaultText : "未设置"}}
+                        <span class="icon {{item.editIconStyleCss ? item.editIconStyleCss : 'has-text-info'}}" *ngIf="item.editable">
+                            <i class="ion-ios-create"></i>
+                        </span>
+                    </p>
+                </div>
+                <!-- <div *ngSwitchCase="'file'">
+                    <div *ngIf="form.controls[item.name] && form.controls[item.name].value.length > 0" class="field is-grouped is-grouped-multiline">
+                        <div class="control" *ngFor="let file of form.controls[item.name].value;let index = index" (click)="removeFile(item.name , index)">
+                            <div class="tags has-addons">
+                                <a class="tag {{item.styleCss? item.styleCss : 'is-link'}}">{{file.fileName}}</a>
+                                <a class="tag is-delete"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!item.fileMaxCount || !!item.fileMaxCount && item.fileMaxCount > 0 && item.fileMaxCount > form.controls[item.name].value.length" class="{{ item.btnStyleCss ? 'file ' + item.btnStyleCss : 'file is-boxed is-small'}}">
+                        <label class="file-label">
+                          <input class="file-input" type="file" (change)="onFileDetective($event , item)">
+                          <span class="file-cta">
+                              <span class="file-icon" *ngIf="item.btnIcon">
+                                  <i [class]="item.btnIcon"></i>
+                              </span>
+                              <span class="file-label">
+                                  {{item.btnText ? item.btnText : 'Choose a file…'}}
+                              </span>
+                          </span>
+                      </label>
+                    </div>
+                </div> -->
+                <div *ngSwitchCase="'img'">
+                    <div *ngIf="form.controls[item.name] && form.controls[item.name].value.length > 0">
+                        <div class="inline-block" *ngFor="let file of form.controls[item.name].value;let index = index">
+                            <figure class="image {{item.styleCss ? item.styleCss : 'is-128x128'}}" (click)="removeFile(item , index)">
+                                <img [src]="file.fileUrl" [alt]=file.fileName>
+                                <a class="delete is-large" *ngIf="item.editable"></a>
+                            </figure>
+                        </div>
+                    </div>
+                    <div *ngIf="item.editable && (!item.fileMaxCount || !!item.fileMaxCount && item.fileMaxCount > 0 && item.fileMaxCount > form.controls[item.name].value.length)" class="{{ item.btnStyleCss ? 'file ' + item.btnStyleCss : 'file is-boxed is-small'}}">
+                        <label class="file-label">
+                          <input class="file-input" type="file" accept="image/*" (change)="onFileDetective($event , item)">
+                          <span class="file-cta">
+                              <span class="file-icon" *ngIf="item.btnIcon">
+                                  <i [class]="item.btnIcon"></i>
+                              </span>
+                              <span class="file-label">
+                                  {{item.btnText ? item.btnText : 'Choose a file…'}}
+                              </span>
+                          </span>
+                      </label>
+                    </div>
+                </div>
+                <div *ngSwitchDefault class="control" [class.has-icons-left]="item.inputIcon" [class.has-icons-right]="item.validators && item.validators.length > 0">
+                    <div *ngIf="item.editable && editStatusMap[item.name]">
+                        <input *ngIf="item.type === 'date'" [id]="item.name" [class]="item.styleCss ? 'input ' + item.styleCss : 'input'" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length> 0 || getKeys(configSelfValidatorError[item.name]).length > 0"
+                            [type]="item.type" [formControlName]="item.name" [placeholder]="item.placeholder ? item.placeholder : '' ">
+                        <input *ngIf="item.type !== 'date'" [class]="item.styleCss ? 'input ' + item.styleCss : 'input'" [class.is-danger]="form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(form.controls[item.name].errors).length> 0 || getKeys(configSelfValidatorError[item.name]).length > 0"
+                            [type]="item.type" [formControlName]="item.name" [placeholder]="item.placeholder ? item.placeholder : '' ">
+                        <span class="icon is-left" *ngIf="item.inputIcon">
+                            <i [class]="item.inputIcon"></i>
+                        </span>
+                        <span class="icon is-right has-text-danger" *ngIf="item.validators && item.validators.length > 0">
+                            <i [class.ion-ios-alert]="(form.controls[item.name].dirty || form.controls[item.name].touched) && form.controls[item.name].invalid && getKeys(form.controls[item.name].errors).length > 0 || (form.controls[item.name].dirty || form.controls[item.name].touched) && getKeys(configSelfValidatorError[item.name]).length > 0"></i>
+                        </span>
+                    </div>
+                    <p *ngIf="!editStatusMap[item.name]" (click)="onEditClicked(item)">
+                        {{_dataCopy[item.name] ? item.type === 'date' ? getLocalDateTime(_dataCopy[item.name]) : _dataCopy[item.name] : item.defaultText? item.defaultText : "未设置"}}
+                        <span class="icon {{item.editIconStyleCss ? item.editIconStyleCss : 'has-text-info'}}" *ngIf="item.editable">
+                            <i class="ion-ios-create"></i>
+                        </span>
+                    </p>
+                </div>
+
+                <div *ngIf="item.type !== 'divider' && editStatusMap[item.name] && item.editable && (form.controls[item.name].invalid && (form.controls[item.name].dirty || form.controls[item.name].touched))">
+                    <div *ngFor="let type of getKeys(form.controls[item.name].errors) ">
+                        <p class="help is-danger ">
+                            {{item.invalidErrorText && item.invalidErrorText[type] ? item.invalidErrorText[type] : "Error: " + type}}
+                        </p>
+                    </div>
+                </div>
+                <div *ngIf="item.type !== 'divider' && editStatusMap[item.name] && item.editable && (form.controls[item.name].dirty || form.controls[item.name].touched || item.type === 'file' || item.type === 'img')">
+                    <div *ngFor="let type of getKeys(configSelfValidatorError[item.name]) ">
+                        <p class="help is-danger">
+                            {{configSelfValidatorError[item.name][type].error && configSelfValidatorError[item.name][type].errorText ? configSelfValidatorError[item.name][type].errorText : "Error: " + type}}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column is-12 margin-top" *ngIf="item.type !== 'divider' && editStatusMap[item.name] && item.editable">
+                <button class="button half left {{config.confirmBtnConfig.btnStyleCss ? config.confirmBtnConfig.btnStyleCss : 'is-primary'}}" (click)="submit(item.name, form.controls[item.name].value)" [disabled]="form.controls[item.name] && form.controls[item.name].invalid || getKeys(configSelfValidatorError[item.name]).length > 0">
+                    <span class="icon" *ngIf="config.confirmBtnConfig.btnIcon">
+                        <i [class]="config.confirmBtnConfig.btnIcon"></i>
+                    </span>
+                    <span>{{config.confirmBtnConfig.btnText}}</span>
+                </button>
+                <a class="button half right {{config.cancelBtnConfig.btnStyleCss ? config.cancelBtnConfig.btnStyleCss : ''}}" (click)="cancel(item.name)">
+                    <span class="icon" *ngIf="config.cancelBtnConfig.btnIcon">
+                        <i [class]="config.cancelBtnConfig.btnIcon"></i>
+                    </span>
+                    <span>{{config.cancelBtnConfig.btnText}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,6 +1,6 @@
 import { ValidatorFn } from "@angular/forms";
 
-export class NaFormConfig {
+export class NaDetailEditorConfig {
 
     private _context: any;
 
@@ -20,9 +20,7 @@ export class NaFormConfig {
 
     private _cancelBtnStyle: string;
 
-    private _showCancelBtn: boolean;
-
-    private _config: Array<NaFormConfigItem>;
+    private _config: Array<NaDetailEditorConfigItem>;
 
     constructor(context: any) {
         this._context = context;
@@ -34,7 +32,6 @@ export class NaFormConfig {
         this._cancelBtnText = "cancel";
         this._cancelBtnIcon = "";
         this._cancelBtnStyle = "";
-        this._showCancelBtn = false;
         this._config = [];
     }
 
@@ -42,7 +39,7 @@ export class NaFormConfig {
         return this._context;
     }
 
-    setTitle(title: string): NaFormConfig {
+    setTitle(title: string): NaDetailEditorConfig {
         this._title = title;
         return this;
     }
@@ -51,7 +48,7 @@ export class NaFormConfig {
         return this._title;
     }
 
-    setTitleStyle(style: string): NaFormConfig {
+    setTitleStyle(style: string): NaDetailEditorConfig {
         this._titleStyle = style;
         return this;
     }
@@ -60,16 +57,16 @@ export class NaFormConfig {
         return this._titleStyle;
     }
 
-    setConfig(config: Array<NaFormConfigItem>): NaFormConfig {
+    setConfig(config: Array<NaDetailEditorConfigItem>): NaDetailEditorConfig {
         this._config = config;
         return this;
     }
 
-    get configItems(): Array<NaFormConfigItem> {
+    get configItems(): Array<NaDetailEditorConfigItem> {
         return this._config;
     }
 
-    setConfirmBtnConfig(btnText: string, btnIcon?: string, btnStyleCss?: string): NaFormConfig {
+    setConfirmBtnConfig(btnText: string, btnIcon?: string, btnStyleCss?: string): NaDetailEditorConfig {
         this._confirmBtnText = btnText;
         if (btnIcon) this._confirmBtnIcon = btnIcon;
         if (btnStyleCss) this._confirmBtnStyle = btnStyleCss;
@@ -84,17 +81,15 @@ export class NaFormConfig {
         }
     }
 
-    setCancelBtnConfig(showCancelBtn: boolean, btnText?: string, btnIcon?: string, btnStyleCss?: string): NaFormConfig {
-        this._showCancelBtn = showCancelBtn;
-        if (btnText) this._cancelBtnText = btnText;
+    setCancelBtnConfig(btnText: string, btnIcon?: string, btnStyleCss?: string): NaDetailEditorConfig {
+        this._cancelBtnText = btnText;
         if (btnIcon) this._cancelBtnIcon = btnIcon;
         if (btnStyleCss) this._cancelBtnStyle = btnStyleCss;
         return this;
     }
 
-    get cancelBtnConfig(): { showCancelBtn: boolean, btnText: string, btnIcon: string, btnStyleCss: string } {
+    get cancelBtnConfig(): { btnText: string, btnIcon: string, btnStyleCss: string } {
         return {
-            showCancelBtn: this._showCancelBtn,
             btnText: this._cancelBtnText,
             btnIcon: this._cancelBtnIcon,
             btnStyleCss: this._cancelBtnStyle
@@ -103,13 +98,11 @@ export class NaFormConfig {
 
 }
 
-export type NaFormConfigItem = {
+export type NaDetailEditorConfigItem = {
     label: string,
     name: string,
-    type: "text" | "number" | "tel" | "password" | "email" | "textarea"
-    | "select" | "radio" | "checkbox" | "date"
-    | "file" | "img" | "search"
-    | "divider",
+    type: "text" | "number" | "tel" | "email" | "textarea"
+    | "select" | "radio" | "date" | "img" | "divider",
     /**
      * @param placeholder 仅在type为text\number\tel\password\email\textarea时生效
      * */
@@ -159,11 +152,8 @@ export type NaFormConfigItem = {
         name: string,
         value: any
     }>,
+    defaultText?: string,
     selectDefaultText?: string,
-    /**
-     * @param checkboxText 仅在type为checkbox时生效
-     * */
-    checkboxText?: string,
     /**
      * @param dateLang 仅在type为date时生效
      * */
@@ -174,38 +164,31 @@ export type NaFormConfigItem = {
      * */
     styleCss?: string,
     /**
-     * @param btnText 仅在type为file\img\search时生效
+     * @param btnText 仅在type为file\img时生效
      * */
     btnText?: string,
     /**
-     * @param btnIcon 仅在type为file\img\search时生效
+     * @param btnIcon 仅在type为file\img时生效
      * */
     btnIcon?: string,
     /**
-     * @param btnStyleCss 仅在type为file\img\search时生效
+     * @param btnStyleCss 仅在type为file\img时生效
      * */
     btnStyleCss?: string,
     /**
-     * @param searchFrom 仅在type为search时生效，设置为你需要通过哪个字段来进行搜索
-     * */
-    searchFrom?: string,
-    /**
-     * @param searchAction 仅在type为file\img\search时生效。
-     * 如果type为search获取到你要操作字段的值以及对search按钮进行的处理。
+     * @param action 仅在type为file\img时生效。
      * */
     action?: (
-        value: any,
-        target: {
-            btnText: string,
-            btnIcon: string,
-            btnStyleCss: string
-        },
-        setFileList?: (files: Array<string>) => void
+        value: Array<FileList>,
+        setFileList?: (files: Array<{
+            fileName: string,
+            fileUrl: string
+        }>) => void
     ) => void,
     fileMaxCount?: number,
     fileMinCount?: number,
     fileCountErrorText?: string,
-
-    columnStyleCss?: string,
+    editable?: boolean,
+    editIconStyleCss?: string
 }
 

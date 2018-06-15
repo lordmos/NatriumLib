@@ -1,0 +1,52 @@
+form {
+    padding: 1rem;
+}
+
+.inline-block {
+    display: inline-block;
+    border: 1px solid #444;
+    margin: 0.5rem;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+figure .delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.column {
+    padding-top: 0;
+}
+
+.half {}
+
+.half.left {
+    margin-right: 0.5rem;
+}
+
+.half.right {
+    margin-left: 0.5rem;
+}
+
+p {
+    cursor: pointer;
+}
+
+p .icon {
+    height: auto;
+    position: relative;
+    color: #444;
+}
+
+.margin-top {
+    margin-top: 0.5rem;
+}
+
+@media screen and (max-width: 768px) {
+    .half {
+        display: inline-block;
+        width: calc(50% - 0.5rem);
+    }
+}

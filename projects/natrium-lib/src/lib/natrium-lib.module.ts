@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+
 import { NaComponentHostDirective } from './na-component-host/na-component-host.directive';
 import { NaOutletComponent } from './na-outlet/na-outlet.component';
 import { NaPaginationComponent } from './na-pagination/na-pagination.component';
-import { NaFormComponent } from './na-form/na-form.component';
-
 import { NaTableComponent } from './na-table/na-table.component';
+import { NaFormComponent } from './na-form/na-form.component';
+import { NaDetailEditorComponent } from './na-detail-editor/na-detail-editor.component';
 
 @NgModule({
 	imports: [
@@ -19,6 +20,7 @@ import { NaTableComponent } from './na-table/na-table.component';
 	declarations: [
 		NaTableComponent,
 		NaFormComponent,
+		NaDetailEditorComponent,
 		NaPaginationComponent,
 		NaOutletComponent,
 		NaComponentHostDirective
@@ -26,6 +28,7 @@ import { NaTableComponent } from './na-table/na-table.component';
 	exports: [
 		NaTableComponent,
 		NaFormComponent,
+		NaDetailEditorComponent,
 		NaPaginationComponent,
 		NaOutletComponent,
 		NaComponentHostDirective
