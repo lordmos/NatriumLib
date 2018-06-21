@@ -16,8 +16,8 @@ function changeAngularJsonConfig() {
                     config.projects[key].architect.build.options.styles.unshift("node_modules/bulma/css/bulma.min.css");
                     config.projects[key].architect.build.options.styles.unshift("node_modules/bulma-extensions/dist/bulma-extensions.min.css");
                     config.projects[key].architect.build.options.scripts.unshift("node_modules/bulma-extensions/bulma-accordion/dist/bulma-accordion.min.js");
-                    config.projects[key].architect.build.options.scripts.unshift("node_modules/bulma-calendar/dist/bulma-calendar.min.js");
-                    config.projects[key].architect.build.options.scripts.unshift("node_modules/bulma-extensions/bulma-carousel/dist/bulma-carousel.min.js");
+                    config.projects[key].architect.build.options.scripts.unshift("node_modules/bulma-extensions/bulma-calendar/dist/js/bulma-calendar.min.js");
+                    config.projects[key].architect.build.options.scripts.unshift("node_modules/bulma-extensions/bulma-carousel/dist/js/bulma-carousel.min.js");
                     config.projects[key].architect.build.options.scripts.unshift("node_modules/bulma-extensions/bulma-tagsinput/dist/bulma-tagsinput.min.js");
                     break;
                 }
