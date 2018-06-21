@@ -104,6 +104,7 @@
 
 - [NaTable](./docs/components/na-table.md) : 通过加载配置项数据和列表数据，可以对表格数据进行展示和操作。
 - [NaForm](./docs/components/na-form.md) : 通过加载配置项数据和表单数据，可以对表单数据进行展示和操作，而且还能轻松获得表单验证的支持。
+- [NaDetailEditor](./docs/components/na-detail-editor.md) : 通常用来展示表单详情数据，同时支持字段编辑。通过加载配置项数据和表单数据，可以对表单数据进行展示和操作，而且还能轻松获得表单验证的支持。
 
 ## Natrium封装型组件集
 

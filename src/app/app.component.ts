@@ -102,7 +102,11 @@ export class AppComponent {
 	) {
 		this.data = {
 			nickname: "lennon",
-			sex: "male"
+			sex: "male",
+			avatar: {
+				fileName: "avatar.png",
+				fileUrl: "./avatar.png"
+			}
 		}
 		this.config = new NaDetailEditorConfig(this)
 			.setTitle("基本信息")
@@ -115,7 +119,8 @@ export class AppComponent {
 				btnStyleCss: "is-warning",
 				action: this.onFileDetected,
 				fileMaxCount: 1,
-				fileMinCount: 1
+				fileMinCount: 1,
+				editable: true
 			}, {
 				label: "昵称",
 				type: "text",
@@ -123,8 +128,8 @@ export class AppComponent {
 				validators: [
 					Validators.required
 				],
-				editable: true,
 				styleCss: "is-rounded",
+				editable: true
 			}, {
 				label: "邮箱",
 				name: "email",
@@ -157,7 +162,8 @@ export class AppComponent {
 				],
 				styleCss: "is-warning",
 				lessThan: "today",
-				lessErrorText: "生日不可能超过今天"
+				lessErrorText: "生日不可能超过今天",
+				editable: true
 			}, {
 				label: "今天",
 				name: "today",
@@ -189,12 +195,12 @@ export class AppComponent {
 				],
 				styleCss: "is-warning",
 				selectDefaultText: "选择用户类型",
-				inputIcon: "ion-ios-people"
+				inputIcon: "ion-ios-people",
+				editable: true
 			}, {
 				label: "性别",
 				name: "sex",
 				type: "radio",
-				editable: true,
 				styleCss: "is-warning",
 				options: [{
 					name: "男",
@@ -205,7 +211,8 @@ export class AppComponent {
 				}],
 				validators: [
 					Validators.required
-				]
+				],
+				editable: true
 			}])
 			.setConfirmBtnConfig(
 				"保存",
