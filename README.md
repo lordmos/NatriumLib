@@ -21,7 +21,7 @@
         ...
         imports: [
             ...
-            NatriumLibModule
+            NatriumLibModule.forRoot()
         ]
         ...
     })
@@ -53,10 +53,11 @@
     ...
     "scripts": [
         ...
-        "node_modules/bulma-extensions/bulma-accordion/dist/bulma-accordion.min.js",
-        "node_modules/bulma-extensions/bulma-calendar/dist/js/bulma-calendar.min.js",
+        "node_modules/bulma-extensions/bulma-tagsinput/dist/bulma-tagsinput.min.js",
         "node_modules/bulma-extensions/bulma-carousel/dist/js/bulma-carousel.min.js",
-        "node_modules/bulma-extensions/bulma-tagsinput/dist/bulma-tagsinput.min.js"
+        "node_modules/bulma-extensions/bulma-calendar/dist/js/bulma-calendar.min.js",
+        "node_modules/bulma-extensions/bulma-accordion/dist/bulma-accordion.min.js",
+        "node_modules/bulma-extensions/bulma-quickview/dist/bulma-quickview.min.js"
         ...
     ],
     ...

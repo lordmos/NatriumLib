@@ -12,7 +12,7 @@ import { NatriumLibModule } from 'projects/natrium-lib/src/public_api';
   imports: [
     BrowserModule,
     HttpClientModule,
-    NatriumLibModule
+    NatriumLibModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

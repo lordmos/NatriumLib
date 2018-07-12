@@ -7,4 +7,8 @@ export * from './lib/na-detail-editor/na-detail-editor.config';
 export * from './lib/na-pagination/na-pagination.component';
 export * from './lib/na-outlet/na-outlet.component';
 export * from './lib/na-component-host/na-component-host.directive';
+export * from './lib/na-modal/na-modal';
+export * from './lib/na-modal/na-modal.service';
+export * from './lib/na-notification/na-notification.config';
+export * from './lib/na-notification/na-notification.service';
 export * from './lib/natrium-lib.module';

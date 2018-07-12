@@ -35,7 +35,7 @@ function changePackageJsonConfig() {
             config["scripts"] = {
                 "install": "node post-install.js"
             };
-            config["dependencies"]["ionicons"] = "^4.1.2";
+            config["dependencies"]["ionicons"] = "^4.2.4";
             config["dependencies"]["bulma"] = "^0.7.1";
             config["dependencies"]["bulma-extensions"] = "^1.1.0";
             fs.writeFileSync(distPackageJsonPath, JSON.stringify(config, undefined, 2));
