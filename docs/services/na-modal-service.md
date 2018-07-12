@@ -60,4 +60,4 @@
 
 > show(modalComponent: Type<Modal>, data?: any): Promise<any>
 
-
+展示你自定义的组件为弹窗，并且支持提供初始化数据。通过Promise来返回确认和取消的回调。
