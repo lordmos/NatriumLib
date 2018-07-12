@@ -15,7 +15,7 @@ export class NaModalComponent {
 
 	constructor() { }
 
-	ngAfterViewInit() {
+	ngAfterContentInit() {
 		this.onAfterViewInit.emit();
 	}
 
