@@ -112,7 +112,15 @@
 
 - [NaPagination](./docs/components/na-pagination.md) : 分页导航器。初始化时设置当前页、总页数和页面导航器所要展示的页面数量，就可以轻松获取和操作页面导航数据。由于`Bulma`的`Pagination`并不基于数据驱动`AJAX`请求而是页面跳转——当然也可以通过`Angular`点击事件驱动，但是用户需要在`HTML`上进行处理，为了减少用户的代码量——因此`Natrium Lib`不推荐直接使用`Bulma`的`Pagination`组件而是选择重新封装。
 - [NaComponentHost](./docs/components/na-component-host.md) : 在`Angular`中加载动态组件时候需要一个`Host`。直接使用`NaComponentHost`吧。
-- [NaOutlet](./docs/na-outlet.md) : 在`routing-module`中经常需要在HTML中嵌套`router-outlet`。直接使用`NaOutlet`吧。
+- [NaOutlet](./docs/components/na-outlet.md) : 在`routing-module`中经常需要在HTML中嵌套`router-outlet`。直接使用`NaOutlet`吧。
+
+## Natrium服务型组件集
+
+服务型组件是一些你想用到时仅需通过全局服务就能使用的组件。
+
+- [NaNotificationService](./docs/services/na-notification-service.md) : 单行文字提示框服务。
+- [NaModelService](./docs/services/na-modal-service.md) : 模态弹窗服务。你可以自定义一个组件，并把它作为一个弹窗进行显示。
+
 
 ## Natrium组件风格化
 
